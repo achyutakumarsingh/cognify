@@ -1,0 +1,37 @@
+# ==============================================================================
+# Supply Chain Risk Triage — Stage 7 Simulation Config
+# ==============================================================================
+
+simulation:
+  financial:
+    # Baseline defaults
+    holding_cost_rate: 0.05      # 5% of item price per period
+    stockout_penalty_rate: 0.40  # 40% of item price per unit (lost margin + penalty)
+
+  scenarios:
+    high_volatility_pct: 0.75    # 75th percentile of rolling_std_28
+
+  sensitivity:
+    # We will test the system across these parameter sweeps
+    holding_cost_rates: [0.02, 0.05, 0.10, 0.15]
+    stockout_penalty_rates: [0.10, 0.40, 0.80, 1.20]
+
+inputs:
+  dashboard_data: "outputs/decision/stage6_risk_dashboard_data.parquet"
+
+outputs:
+  simulation_dir: "outputs/simulation/"
+  reports_dir: "outputs/reports/"
+  plots_dir: "outputs/plots/"
+  
+artifacts:
+  business_dataset: "stage7_business_impact_data.parquet"
+  financial_summary: "stage7_financial_summary.json"
+  sensitivity_summary: "stage7_sensitivity_summary.json"
+  final_recommendation: "stage7_executive_summary.md"
+  
+plots:
+  cost_breakdown: "cost_breakdown_comparison.png"
+  service_level_vs_holding: "service_level_vs_holding_cost.png"
+  scenario_performance: "scenario_performance.png"
+  sensitivity_analysis: "sensitivity_analysis.png"

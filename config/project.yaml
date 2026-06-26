@@ -1,0 +1,31 @@
+# ==============================================================================
+# Project-Level Configuration
+# ==============================================================================
+# Global settings shared across all stages of the pipeline.
+# ==============================================================================
+
+project:
+  name: "Calibrated Uncertainty Quantification for Supply Chain Risk Triage"
+  version: "1.0.0"
+  authors:
+    - "Indo-Swiss Hackathon Team"
+  random_seed: 42
+
+# --- Dataset Metadata ---
+dataset:
+  name: "M5 Forecasting – Accuracy"
+  source: "Walmart / Kaggle"
+  description: >
+    Hierarchical sales data from Walmart covering 3,049 products
+    across 10 stores in 3 US states (CA, TX, WI) over ~5.4 years
+    (Jan 2011 – Jun 2016). Contains daily unit sales, weekly
+    sell prices, calendar events, and SNAP indicator flags.
+  time_granularity: "daily"
+  forecast_horizon: 28  # days
+  num_products: 3049
+  num_stores: 10
+  num_states: 3
+  states: ["CA", "TX", "WI"]
+  categories: ["HOBBIES", "HOUSEHOLD", "FOODS"]
+  departments: ["HOBBIES_1", "HOBBIES_2", "HOUSEHOLD_1", "HOUSEHOLD_2",
+                 "FOODS_1", "FOODS_2", "FOODS_3"]

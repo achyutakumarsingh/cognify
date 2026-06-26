@@ -1,0 +1,64 @@
+{
+  "generated_at": "2026-06-26T01:11:14.758670",
+  "dataset_shape": {
+    "rows": 59181090,
+    "columns": 50
+  },
+  "memory": {
+    "before_optimization_mb": 18871.1,
+    "after_optimization_mb": 8602.8,
+    "reduction_pct": 54.4
+  },
+  "validation_checks": {
+    "row_count": {
+      "passed": true,
+      "message": "PASS  Row count: 59,181,090 (0.00% off expected)"
+    },
+    "no_nulls_critical": {
+      "passed": true,
+      "message": "PASS  No NaN in critical columns"
+    },
+    "no_negative_sales": {
+      "passed": true,
+      "message": "PASS  All sales values \u2265 0  (max=763)"
+    },
+    "temporal_ordering": {
+      "passed": true,
+      "message": "PASS  Temporal order verified for 5 sampled series"
+    },
+    "split_completeness": {
+      "passed": true,
+      "message": "PASS  Split counts: {'train': 57473650, 'val': 853720, 'test': 853720}"
+    },
+    "lag_leakage": {
+      "passed": true,
+      "message": "PASS  No leakage detected in lag features (spot-check)"
+    },
+    "feature_completeness": {
+      "passed": true,
+      "message": "PASS  All 50 expected features present"
+    },
+    "zero_inflation_rate": {
+      "passed": true,
+      "message": "PASS  Zero-inflation rate: 68.0%  (expected ~68%)"
+    },
+    "memory_budget": {
+      "passed": false,
+      "message": "FAIL  Memory 8603 MB exceeds budget 4000 MB"
+    }
+  },
+  "n_checks_passed": 8,
+  "n_checks_total": 9,
+  "all_passed": false,
+  "split_counts": {
+    "train": 57473650,
+    "val": 853720,
+    "test": 853720
+  },
+  "target_stats": {
+    "mean": 1.1309,
+    "std": 3.87,
+    "max": 763,
+    "zero_pct": 68.0
+  }
+}

@@ -1,0 +1,79 @@
+{
+    "conformal_calibration_curve": [
+        {
+            "target_coverage": 0.5,
+            "empirical_coverage": 0.41875,
+            "coverage_error": 0.08124999999999999,
+            "avg_interval_width": 0.004633090847097005,
+            "sharpness_std": 0.00032779437802520496,
+            "winkler_score": 4.1960263711240255,
+            "zero_demand_coverage": 0.8791744840525328
+        },
+        {
+            "target_coverage": 0.8,
+            "empirical_coverage": 0.7592857142857142,
+            "coverage_error": 0.040714285714285814,
+            "avg_interval_width": 1.6412950642727082,
+            "sharpness_std": 0.5364977774556482,
+            "winkler_score": 8.029153772901294,
+            "zero_demand_coverage": 1.0
+        },
+        {
+            "target_coverage": 0.9,
+            "empirical_coverage": 0.875,
+            "coverage_error": 0.025000000000000022,
+            "avg_interval_width": 3.3602780802229453,
+            "sharpness_std": 1.0347673448881045,
+            "winkler_score": 11.947603966540607,
+            "zero_demand_coverage": 1.0
+        },
+        {
+            "target_coverage": 0.95,
+            "empirical_coverage": 0.9364285714285714,
+            "coverage_error": 0.013571428571428568,
+            "avg_interval_width": 5.620977222568306,
+            "sharpness_std": 1.568425508505846,
+            "winkler_score": 15.92372531089407,
+            "zero_demand_coverage": 1.0
+        }
+    ],
+    "quantile_calibration": {
+        "target_coverage": 0.9,
+        "empirical_coverage": 0.9378571428571428,
+        "coverage_error": 0.03785714285714281,
+        "avg_interval_width": 3.919447660446167,
+        "sharpness_std": 5.7538580894470215,
+        "winkler_score": 6.044864177703857,
+        "zero_demand_coverage": 0.9729831144465291
+    },
+    "volatility_analysis": [
+        {
+            "Method": "Conformal",
+            "Regime": "High Volatility",
+            "Count": 1400,
+            "Coverage": 0.04285714285714286,
+            "Avg_Width": 3.977836656776181
+        },
+        {
+            "Method": "Conformal",
+            "Regime": "Normal",
+            "Count": 4200,
+            "Coverage": 0.10428571428571429,
+            "Avg_Width": 3.31482366830107
+        },
+        {
+            "Method": "Quantile",
+            "Regime": "High Volatility",
+            "Count": 1400,
+            "Coverage": 0.060714285714285714,
+            "Avg_Width": 9.823094174453988
+        },
+        {
+            "Method": "Quantile",
+            "Regime": "Normal",
+            "Count": 4200,
+            "Coverage": 0.10428571428571429,
+            "Avg_Width": 2.1582207077291726
+        }
+    ]
+}

@@ -1,0 +1,35 @@
+# ==============================================================================
+# Supply Chain Risk Triage — Stage 5 Calibration & Reliability Config
+# ==============================================================================
+
+evaluation:
+  # Target confidence levels for full calibration curve (Conformal)
+  confidence_levels: [0.50, 0.80, 0.90, 0.95]
+  
+  # The native confidence level that Quantile Regression was trained on
+  qr_native_level: 0.90
+
+  # High Volatility definition
+  # Uses the test-set percentile of 'rolling_std_28' to define volatile periods
+  volatility_feature: "rolling_std_28"
+  volatility_percentile_threshold: 0.75
+
+inputs:
+  quantile_preds: "outputs/predictions/quantile_predictions.parquet"
+  conformal_preds: "outputs/predictions/conformal_predictions.parquet"
+  interval_metadata: "outputs/reports/stage4_interval_metadata.json"
+
+outputs:
+  reports_dir: "outputs/reports/"
+  plots_dir: "outputs/plots/"
+  
+artifacts:
+  calibration_report: "stage5_calibration_report.json"
+  segment_analysis: "stage5_segment_analysis.csv"
+  final_recommendation: "stage5_final_recommendation.md"
+  
+plots:
+  calibration_curves: "calibration_curves.png"
+  reliability_diagram: "reliability_diagram.png"
+  volatility_stress: "volatility_stress_test.png"
+  segment_heatmap: "segment_calibration_heatmap.html"

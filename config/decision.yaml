@@ -1,0 +1,51 @@
+# ==============================================================================
+# Supply Chain Risk Triage — Stage 6 Decision Engine Config
+# ==============================================================================
+
+decision:
+  # Weights for the Composite Risk Score
+  score_weights:
+    interval_width: 0.30
+    forecast_error: 0.25
+    historical_volatility: 0.25
+    calibration_penalty: 0.20
+
+  # Percentile thresholds for Risk Classification
+  thresholds:
+    low_risk_max_pct: 0.60
+    medium_risk_max_pct: 0.85
+    # High risk is anything above medium_risk_max_pct
+
+  # Operational Recommendations Mapping
+  recommendations:
+    Low:
+      action: "Standard replenishment. Order predicted quantity."
+      intervention: "No intervention required."
+      safety_stock_buffer_percentile: 0.50
+    Medium:
+      action: "Increase safety stock moderately. Monitor demand closely."
+      intervention: "Review supplier lead time."
+      safety_stock_buffer_percentile: 0.75
+    High:
+      action: "Increase safety stock significantly. Increase replenishment frequency."
+      intervention: "Notify planners immediately. Escalate to supply chain manager."
+      safety_stock_buffer_percentile: 0.95
+
+inputs:
+  predictions: "outputs/predictions/conformal_predictions.parquet"
+  segment_analysis: "outputs/reports/stage5_segment_analysis.csv"
+
+outputs:
+  decision_dir: "outputs/decision/"
+  reports_dir: "outputs/reports/"
+  plots_dir: "outputs/plots/"
+  
+artifacts:
+  dashboard_data: "stage6_risk_dashboard_data.parquet"
+  classification_report: "stage6_classification_report.json"
+  
+plots:
+  risk_distribution: "risk_distribution.png"
+  risk_level_dist: "risk_level_dist.png"
+  risk_heatmap: "risk_heatmap.html"
+  top_10_risk_items: "top_10_risk_items.png"

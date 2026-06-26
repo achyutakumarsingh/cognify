@@ -1,0 +1,65 @@
+# ==============================================================================
+# Supply Chain Risk Triage — Forecasting Config
+# ==============================================================================
+# Configuration for Stage 3: Demand Forecasting Engine (XGBoost)
+# ==============================================================================
+
+pipeline:
+  seed: 42
+  target: "sales"
+  features_to_drop:
+    - "item_id"
+    - "store_id"
+    - "date"
+    - "d"
+    - "split"
+    # Event types 1 & 2 are categorical, keep them, but if memory is an issue
+    # or the tree algorithm cannot split them natively without one-hot, 
+    # XGBoost handles categories via `enable_categorical=True`.
+
+# XGBoost specific settings
+model:
+  # The Tweedie regression loss elegantly handles the exact combination
+  # of many zeros (68%) and a continuous right-skewed positive distribution.
+  objective: "reg:tweedie"
+  tree_method: "hist"                # Required for `enable_categorical=True` and speed
+  enable_categorical: true
+  
+  # Base static parameters
+  static_params:
+    tweedie_variance_power: 1.5      # 1 = Poisson, 2 = Gamma; 1.5 is a standard starting point
+    eval_metric: "rmse"              # Using basic RMSE for early stopping
+    early_stopping_rounds: 30        # Stop if no improvement
+    n_estimators: 300                # Max trees (usually stopped early)
+    n_jobs: -1                       # Use all cores
+    random_state: 42
+
+# Optuna Hyperparameter Optimization space
+tuning:
+  n_trials: 5                        # Number of hyperparameter search trials
+  params:
+    learning_rate: [0.01, 0.3]       # Log-uniform
+    max_depth: [5, 12]               # Int
+    min_child_weight: [10, 300]      # Int; high to prevent overfitting on noisy retail data
+    subsample: [0.5, 0.95]           # Uniform
+    colsample_bytree: [0.5, 0.9]     # Uniform
+    gamma: [0.0, 5.0]                # Uniform
+    reg_alpha: [0.0, 10.0]           # Uniform (L1)
+    reg_lambda: [0.0, 10.0]          # Uniform (L2)
+
+# Evaluation metrics configuration
+evaluation:
+  metrics:
+    - "rmse"
+    - "mae"
+    - "mape"
+    - "wape"
+    - "rmsse"                        # Official M5 Metric
+  # Note: RMSSE calculation requires historical scale (naive forecast denominator)
+  # which will be computed using the training set.
+
+outputs:
+  models_dir: "models/"
+  predictions_dir: "outputs/predictions/"
+  reports_dir: "outputs/reports/"
+  plots_dir: "outputs/plots/"

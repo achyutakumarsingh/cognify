@@ -1,0 +1,109 @@
+# ==============================================================================
+# Supply Chain Risk Triage — Uncertainty Quantification Config
+# ==============================================================================
+# Configuration for Stage 4: Probabilistic Uncertainty Quantification Engine
+#
+# Methods:
+#   1. Quantile Regression (XGBoost reg:quantilereg)
+#   2. Split Conformal Prediction (distribution-free, finite-sample guarantee)
+# ==============================================================================
+
+pipeline:
+  seed: 42
+  # Coverage target: alpha = 0.10 → 90% prediction intervals
+  alpha: 0.10
+  # Secondary alpha for supplementary 80% intervals
+  alpha_secondary: 0.20
+
+# ==============================================================================
+# Method 1 — Quantile Regression
+# ==============================================================================
+quantile_regression:
+  # Target quantiles: lower bound, median, upper bound for 90% PI
+  quantiles:
+    - 0.05   # Lower bound (5th percentile)
+    - 0.50   # Median forecast
+    - 0.95   # Upper bound (95th percentile)
+  # Secondary quantiles for 80% PI comparison
+  quantiles_secondary:
+    - 0.10
+    - 0.90
+
+  # XGBoost objective for quantile regression (requires XGBoost >= 2.0)
+  objective: "reg:quantileerror"
+  # Dedicated hyperparameters for Quantile Regression
+  hyperparameters:
+    learning_rate: 0.1
+    max_depth: 8
+    min_child_weight: 20
+    subsample: 0.8
+    colsample_bytree: 0.8
+  
+  n_estimators: 300
+  early_stopping_rounds: 30
+  eval_metric: "quantile"   # XGBoost 2.0+ native quantile eval metric
+
+# ==============================================================================
+# Method 2 — Split Conformal Prediction
+# ==============================================================================
+conformal_prediction:
+  # Nonconformity score: absolute residual |y - ŷ|
+  score_type: "absolute_residual"
+  # Use finite-sample corrected quantile (Venn-Abers / standard SCP)
+  # q̂ = Quantile(scores, ceil((n+1)(1-alpha)) / n)
+  finite_sample_correction: true
+  # Also compute asymmetric intervals using signed residuals
+  compute_asymmetric: true
+  # Calibration set: val split (from Stage 3 val_predictions.parquet)
+  calibration_source: "outputs/predictions/val_predictions.parquet"
+
+# ==============================================================================
+# Data Sources (Stage 3 artifacts)
+# ==============================================================================
+stage3_artifacts:
+  model_path: "models/xgboost_best_model.json"
+  optimized_params_path: "models/optimized_params.json"
+  val_predictions_path: "outputs/predictions/val_predictions.parquet"
+  test_predictions_path: "outputs/predictions/test_predictions.parquet"
+  evaluation_report_path: "outputs/reports/stage3_evaluation_report.json"
+
+# ==============================================================================
+# Output Paths
+# ==============================================================================
+outputs:
+  predictions_dir: "outputs/predictions/"
+  reports_dir: "outputs/reports/"
+  plots_dir: "outputs/plots/"
+  models_dir: "models/"
+
+# Artifact filenames
+artifacts:
+  quantile_predictions: "quantile_predictions.parquet"
+  conformal_predictions: "conformal_predictions.parquet"
+  interval_metadata: "stage4_interval_metadata.json"
+  uncertainty_report: "stage4_uncertainty_report.json"
+  comparison_table: "stage4_comparison_table.csv"
+
+# Plot filenames
+plots:
+  interval_over_time: "interval_over_time.html"
+  interval_width_histogram: "interval_width_histogram.png"
+  uncertainty_by_item: "uncertainty_by_item.png"
+  uncertainty_by_store: "uncertainty_by_store.html"
+  uncertainty_distribution: "uncertainty_distribution.png"
+  quantile_vs_conformal: "quantile_vs_conformal_comparison.png"
+
+# ==============================================================================
+# Visualization Settings
+# ==============================================================================
+visualization:
+  n_series_to_plot: 4        # Number of items to show in time-series plots
+  dpi: 300
+  figsize_wide: [14, 6]
+  figsize_square: [10, 10]
+  figsize_tall: [12, 8]
+  color_actual: "#2C3E50"
+  color_quantile_median: "#2980B9"
+  color_quantile_band: "#AED6F1"
+  color_conformal_point: "#117A65"
+  color_conformal_band: "#A9DFBF"

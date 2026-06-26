@@ -1,0 +1,214 @@
+{
+    "Sensitivity": [
+        {
+            "Holding_Rate": 0.02,
+            "Stockout_Rate": 0.1,
+            "Baseline_Total_Cost": 888.5836181640625,
+            "Proposed_Total_Cost": 896.8640028871596,
+            "Net_Savings": -8.280384723097086
+        },
+        {
+            "Holding_Rate": 0.02,
+            "Stockout_Rate": 0.4,
+            "Baseline_Total_Cost": 3236.5966796875,
+            "Proposed_Total_Cost": 2144.597049150616,
+            "Net_Savings": 1091.999630536884
+        },
+        {
+            "Holding_Rate": 0.02,
+            "Stockout_Rate": 0.8,
+            "Baseline_Total_Cost": 6367.28125,
+            "Proposed_Total_Cost": 3808.2411108352244,
+            "Net_Savings": 2559.0401391647756
+        },
+        {
+            "Holding_Rate": 0.02,
+            "Stockout_Rate": 1.2,
+            "Baseline_Total_Cost": 9497.96484375,
+            "Proposed_Total_Cost": 5471.885289225727,
+            "Net_Savings": 4026.0795545242727
+        },
+        {
+            "Holding_Rate": 0.05,
+            "Stockout_Rate": 0.1,
+            "Baseline_Total_Cost": 1047.45263671875,
+            "Proposed_Total_Cost": 1618.2935380637646,
+            "Net_Savings": -570.8409013450146
+        },
+        {
+            "Holding_Rate": 0.05,
+            "Stockout_Rate": 0.4,
+            "Baseline_Total_Cost": 3395.465576171875,
+            "Proposed_Total_Cost": 2866.026584327221,
+            "Net_Savings": 529.4389918446541
+        },
+        {
+            "Holding_Rate": 0.05,
+            "Stockout_Rate": 0.8,
+            "Baseline_Total_Cost": 6526.1494140625,
+            "Proposed_Total_Cost": 4529.670646011829,
+            "Net_Savings": 1996.4787680506706
+        },
+        {
+            "Holding_Rate": 0.05,
+            "Stockout_Rate": 1.2,
+            "Baseline_Total_Cost": 9656.833984375,
+            "Proposed_Total_Cost": 6193.314824402332,
+            "Net_Savings": 3463.5191599726677
+        },
+        {
+            "Holding_Rate": 0.1,
+            "Stockout_Rate": 0.1,
+            "Baseline_Total_Cost": 1312.2340087890625,
+            "Proposed_Total_Cost": 2820.676060706377,
+            "Net_Savings": -1508.4420519173145
+        },
+        {
+            "Holding_Rate": 0.1,
+            "Stockout_Rate": 0.4,
+            "Baseline_Total_Cost": 3660.2470703125,
+            "Proposed_Total_Cost": 4068.4091069698334,
+            "Net_Savings": -408.1620366573334
+        },
+        {
+            "Holding_Rate": 0.1,
+            "Stockout_Rate": 0.8,
+            "Baseline_Total_Cost": 6790.93115234375,
+            "Proposed_Total_Cost": 5732.053168654442,
+            "Net_Savings": 1058.8779836893082
+        },
+        {
+            "Holding_Rate": 0.1,
+            "Stockout_Rate": 1.2,
+            "Baseline_Total_Cost": 9921.615234375,
+            "Proposed_Total_Cost": 7395.697347044945,
+            "Net_Savings": 2525.9178873300552
+        },
+        {
+            "Holding_Rate": 0.15,
+            "Stockout_Rate": 0.1,
+            "Baseline_Total_Cost": 1577.015625,
+            "Proposed_Total_Cost": 4023.0586535930634,
+            "Net_Savings": -2446.0430285930634
+        },
+        {
+            "Holding_Rate": 0.15,
+            "Stockout_Rate": 0.4,
+            "Baseline_Total_Cost": 3925.02880859375,
+            "Proposed_Total_Cost": 5270.79169985652,
+            "Net_Savings": -1345.7628912627697
+        },
+        {
+            "Holding_Rate": 0.15,
+            "Stockout_Rate": 0.8,
+            "Baseline_Total_Cost": 7055.712890625,
+            "Proposed_Total_Cost": 6934.435761541128,
+            "Net_Savings": 121.27712908387184
+        },
+        {
+            "Holding_Rate": 0.15,
+            "Stockout_Rate": 1.2,
+            "Baseline_Total_Cost": 10186.396484375,
+            "Proposed_Total_Cost": 8598.079939931631,
+            "Net_Savings": 1588.316544443369
+        }
+    ],
+    "Scenarios": {
+        "Holiday_Event": {
+            "Baseline": {
+                "Total_Demand": 2249.0,
+                "Total_Sold": 1527.0,
+                "Stockout_Units": 722.0,
+                "Overstock_Units": 287.0,
+                "Fill_Rate": 0.6789684304135171,
+                "Service_Level": 0.8125,
+                "Holding_Cost": 36.288002014160156,
+                "Stockout_Cost": 597.89599609375,
+                "Total_Cost": 634.18408203125
+            },
+            "Proposed": {
+                "Total_Demand": 2249.0,
+                "Total_Sold": 1781.0,
+                "Stockout_Units": 468.0,
+                "Overstock_Units": 1170.0,
+                "Fill_Rate": 0.791907514450867,
+                "Service_Level": 0.90625,
+                "Holding_Cost": 168.9175031594932,
+                "Stockout_Cost": 364.0560137629509,
+                "Total_Cost": 532.9735169224441
+            },
+            "Impact": {
+                "Net_Savings": 101.2105651088059,
+                "Cost_Reduction_Pct": 0.15959177780784894,
+                "Stockout_Reduction_Units": 254.0,
+                "Extra_Holding_Cost": 132.62950114533305,
+                "ROI": 0.7631074853995051
+            },
+            "Count": 800
+        },
+        "High_Volatility": {
+            "Baseline": {
+                "Total_Demand": 9596.0,
+                "Total_Sold": 7009.0,
+                "Stockout_Units": 2587.0,
+                "Overstock_Units": 1523.0,
+                "Fill_Rate": 0.730408503543143,
+                "Service_Level": 0.6635714285714286,
+                "Holding_Cost": 158.36851501464844,
+                "Stockout_Cost": 2035.2440185546875,
+                "Total_Cost": 2193.612548828125
+            },
+            "Proposed": {
+                "Total_Demand": 9596.0,
+                "Total_Sold": 7914.0,
+                "Stockout_Units": 1682.0,
+                "Overstock_Units": 3222.0,
+                "Fill_Rate": 0.8247186327636515,
+                "Service_Level": 0.7835714285714286,
+                "Holding_Cost": 350.95351249724627,
+                "Stockout_Cost": 1299.4040526151657,
+                "Total_Cost": 1650.357565112412
+            },
+            "Impact": {
+                "Net_Savings": 543.254983715713,
+                "Cost_Reduction_Pct": 0.247653116319895,
+                "Stockout_Reduction_Units": 905.0,
+                "Extra_Holding_Cost": 192.58499748259783,
+                "ROI": 2.820858274616132
+            },
+            "Count": 1400
+        },
+        "Normal_Demand": {
+            "Baseline": {
+                "Total_Demand": 3119.0,
+                "Total_Sold": 2289.0,
+                "Stockout_Units": 830.0,
+                "Overstock_Units": 606.0,
+                "Fill_Rate": 0.7338890670086566,
+                "Service_Level": 0.890403337969402,
+                "Holding_Cost": 89.38749694824219,
+                "Stockout_Cost": 939.6600341796875,
+                "Total_Cost": 1029.047607421875
+            },
+            "Proposed": {
+                "Total_Demand": 3119.0,
+                "Total_Sold": 2837.0,
+                "Stockout_Units": 282.0,
+                "Overstock_Units": 4576.0,
+                "Fill_Rate": 0.9095864058993267,
+                "Service_Level": 0.9668984700973574,
+                "Holding_Cost": 725.4185084998608,
+                "Stockout_Cost": 309.79600793123245,
+                "Total_Cost": 1035.2145164310932
+            },
+            "Impact": {
+                "Net_Savings": -6.166909009218216,
+                "Cost_Reduction_Pct": -0.005992831589850818,
+                "Stockout_Reduction_Units": 548.0,
+                "Extra_Holding_Cost": 636.0310115516186,
+                "ROI": -0.009695925037010127
+            },
+            "Count": 3595
+        }
+    }
+}

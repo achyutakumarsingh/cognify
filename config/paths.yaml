@@ -1,0 +1,30 @@
+# ==============================================================================
+# Project Path Configuration
+# ==============================================================================
+# Centralized path management for the Supply Chain Risk Triage project.
+# All paths are RELATIVE to the project root directory.
+# This ensures portability across machines and environments.
+# ==============================================================================
+
+# --- Raw Data Paths ---
+data:
+  raw:
+    calendar: "data/calendar.csv"
+    sell_prices: "data/sell_prices.csv"
+    sales: "data/sales_train_evaluation.csv"
+  processed: "data/processed/"
+
+# --- Output Paths ---
+outputs:
+  figures: "outputs/figures/"
+  reports: "outputs/reports/"
+  models: "outputs/models/"
+  logs: "outputs/logs/"
+
+# --- Source Code Paths ---
+src:
+  data: "src/data/"
+  models: "src/models/"
+  evaluation: "src/evaluation/"
+  decision: "src/decision/"
+  utils: "src/utils/"

@@ -1,0 +1,26 @@
+{
+  "train": {
+    "day_index_min": 1,
+    "day_index_max": 1885,
+    "n_days": 1885,
+    "n_rows": 57473650,
+    "date_start": "2011-01-29",
+    "date_end": "2016-03-27"
+  },
+  "val": {
+    "day_index_min": 1886,
+    "day_index_max": 1913,
+    "n_days": 28,
+    "n_rows": 853720,
+    "date_start": "2016-03-28",
+    "date_end": "2016-04-24"
+  },
+  "test": {
+    "day_index_min": 1914,
+    "day_index_max": 1941,
+    "n_days": 28,
+    "n_rows": 853720,
+    "date_start": "2016-04-25",
+    "date_end": "2016-05-22"
+  }
+}

@@ -1,0 +1,252 @@
+{
+  "id": {
+    "group": "identity",
+    "dtype": "category",
+    "desc": "Unique series ID (item_id + store_id)"
+  },
+  "item_id": {
+    "group": "identity",
+    "dtype": "category",
+    "desc": "Product identifier"
+  },
+  "dept_id": {
+    "group": "identity",
+    "dtype": "category",
+    "desc": "Department (7 levels)"
+  },
+  "cat_id": {
+    "group": "identity",
+    "dtype": "category",
+    "desc": "Category (3 levels)"
+  },
+  "store_id": {
+    "group": "identity",
+    "dtype": "category",
+    "desc": "Store identifier (10 stores)"
+  },
+  "state_id": {
+    "group": "identity",
+    "dtype": "category",
+    "desc": "State (CA / TX / WI)"
+  },
+  "d": {
+    "group": "identity",
+    "dtype": "str",
+    "desc": "Day string identifier (d_1 ... d_1941)"
+  },
+  "date": {
+    "group": "identity",
+    "dtype": "datetime",
+    "desc": "Calendar date"
+  },
+  "wm_yr_wk": {
+    "group": "identity",
+    "dtype": "int",
+    "desc": "Walmart fiscal year-week"
+  },
+  "sales": {
+    "group": "target",
+    "dtype": "int16",
+    "desc": "Daily unit sales (TARGET VARIABLE)"
+  },
+  "year": {
+    "group": "date",
+    "dtype": "int16",
+    "desc": "Calendar year (long-term trend)"
+  },
+  "month": {
+    "group": "date",
+    "dtype": "int8",
+    "desc": "Month of year (seasonal)"
+  },
+  "week": {
+    "group": "date",
+    "dtype": "int8",
+    "desc": "ISO week of year"
+  },
+  "day_of_month": {
+    "group": "date",
+    "dtype": "int8",
+    "desc": "Day within month"
+  },
+  "day_of_week": {
+    "group": "date",
+    "dtype": "int8",
+    "desc": "Day of week (0=Mon, 6=Sun)"
+  },
+  "is_weekend": {
+    "group": "date",
+    "dtype": "int8",
+    "desc": "Weekend flag (Sat/Sun)"
+  },
+  "quarter": {
+    "group": "date",
+    "dtype": "int8",
+    "desc": "Calendar quarter"
+  },
+  "day_index": {
+    "group": "date",
+    "dtype": "int16",
+    "desc": "Absolute day number (1-1941, trend proxy)"
+  },
+  "wday": {
+    "group": "date",
+    "dtype": "int8",
+    "desc": "M5 weekday (1=Sat per Walmart convention)"
+  },
+  "weekday": {
+    "group": "date",
+    "dtype": "category",
+    "desc": "Weekday name (string)"
+  },
+  "is_zero_sales": {
+    "group": "zero_inflation",
+    "dtype": "int8",
+    "desc": "1 if sales==0 (intermittency indicator)"
+  },
+  "sell_price": {
+    "group": "price",
+    "dtype": "float32",
+    "desc": "Weekly sell price (USD)"
+  },
+  "price_diff": {
+    "group": "price",
+    "dtype": "float32",
+    "desc": "Price change from previous week (USD)"
+  },
+  "price_pct_change": {
+    "group": "price",
+    "dtype": "float32",
+    "desc": "Percentage price change from previous week"
+  },
+  "price_rel_to_mean": {
+    "group": "price",
+    "dtype": "float32",
+    "desc": "Current price / series mean price (promotion indicator)"
+  },
+  "has_price": {
+    "group": "price",
+    "dtype": "int8",
+    "desc": "1 if sell_price > 0 (item is active/listed)"
+  },
+  "event_name_1": {
+    "group": "event",
+    "dtype": "category",
+    "desc": "Primary event name (or 'no_event')"
+  },
+  "event_type_1": {
+    "group": "event",
+    "dtype": "category",
+    "desc": "Primary event type"
+  },
+  "event_name_2": {
+    "group": "event",
+    "dtype": "category",
+    "desc": "Secondary event name"
+  },
+  "event_type_2": {
+    "group": "event",
+    "dtype": "category",
+    "desc": "Secondary event type"
+  },
+  "has_event_1": {
+    "group": "event",
+    "dtype": "int8",
+    "desc": "1 if any primary event today"
+  },
+  "has_event_2": {
+    "group": "event",
+    "dtype": "int8",
+    "desc": "1 if any secondary event today"
+  },
+  "has_any_event": {
+    "group": "event",
+    "dtype": "int8",
+    "desc": "1 if any event (primary or secondary)"
+  },
+  "is_sporting": {
+    "group": "event",
+    "dtype": "int8",
+    "desc": "1 if event type is Sporting"
+  },
+  "is_cultural": {
+    "group": "event",
+    "dtype": "int8",
+    "desc": "1 if event type is Cultural"
+  },
+  "is_national": {
+    "group": "event",
+    "dtype": "int8",
+    "desc": "1 if event type is National"
+  },
+  "is_religious": {
+    "group": "event",
+    "dtype": "int8",
+    "desc": "1 if event type is Religious"
+  },
+  "snap_CA": {
+    "group": "snap",
+    "dtype": "int8",
+    "desc": "SNAP active in California"
+  },
+  "snap_TX": {
+    "group": "snap",
+    "dtype": "int8",
+    "desc": "SNAP active in Texas"
+  },
+  "snap_WI": {
+    "group": "snap",
+    "dtype": "int8",
+    "desc": "SNAP active in Wisconsin"
+  },
+  "snap_active": {
+    "group": "snap",
+    "dtype": "int8",
+    "desc": "SNAP active for THIS series's state (interaction feature)"
+  },
+  "lag_7": {
+    "group": "lag",
+    "dtype": "float32",
+    "desc": "Sales 7 days ago (same day-of-week, weekly cycle)"
+  },
+  "lag_14": {
+    "group": "lag",
+    "dtype": "float32",
+    "desc": "Sales 14 days ago"
+  },
+  "lag_28": {
+    "group": "lag",
+    "dtype": "float32",
+    "desc": "Sales 28 days ago (M5 standard lag)"
+  },
+  "rolling_mean_7": {
+    "group": "rolling",
+    "dtype": "float32",
+    "desc": "7-day rolling mean sales (short-term trend)"
+  },
+  "rolling_mean_14": {
+    "group": "rolling",
+    "dtype": "float32",
+    "desc": "14-day rolling mean sales"
+  },
+  "rolling_mean_28": {
+    "group": "rolling",
+    "dtype": "float32",
+    "desc": "28-day rolling mean sales (monthly trend)"
+  },
+  "rolling_std_7": {
+    "group": "rolling",
+    "dtype": "float32",
+    "desc": "7-day rolling std (short-term volatility \u2192 uncertainty prior)"
+  },
+  "rolling_std_28": {
+    "group": "rolling",
+    "dtype": "float32",
+    "desc": "28-day rolling std (long-term volatility \u2192 uncertainty prior)"
+  },
+  "split": {
+    "group": "meta",
+    "dtype": "category",
+    "desc": "Data split: train / val / test (temporal)"
+  }
+}

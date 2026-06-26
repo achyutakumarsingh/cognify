@@ -1,0 +1,4 @@
+Method,Coverage Target,Empirical Coverage,Coverage Error,Avg Interval Width,Mean IS (Winkler),MSIS,Sharpness,Zero Coverage
+quantile_regression,90%,0.9379,0.0379,3.9194,6.0449,4.5800,3.6875,0.9730
+split_conformal,90%,0.8750,0.0250,3.3585,11.9494,9.0536,3.1886,1.0000
+split_conformal_asymmetric,90%,0.8741,0.0259,3.7292,12.0856,9.1568,3.5976,1.0000

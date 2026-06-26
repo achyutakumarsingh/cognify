@@ -1,0 +1,99 @@
+================================================================================
+  DATA QUALITY REPORT — Stage 1
+  Project: Calibrated Uncertainty Quantification for Supply Chain Risk Triage
+  Dataset: M5 Forecasting — Accuracy (Walmart)
+================================================================================
+
+  📋 1. COMPLETENESS
+  --------------------------------------------------
+
+  Calendar (1,969 rows × 14 cols):
+    ⚠️  event_name_2: 1,964 missing (99.8%)
+    ⚠️  event_type_2: 1,964 missing (99.8%)
+    ⚠️  event_name_1: 1,807 missing (91.8%)
+    ⚠️  event_type_1: 1,807 missing (91.8%)
+    ℹ️  event_name_1: 1,807 nulls (91.8%) — EXPECTED (most days have no events)
+    ℹ️  event_type_1: 1,807 nulls (91.8%) — EXPECTED (most days have no events)
+    ℹ️  event_name_2: 1,964 nulls (99.7%) — EXPECTED (most days have no events)
+    ℹ️  event_type_2: 1,964 nulls (99.7%) — EXPECTED (most days have no events)
+
+  Sell Prices (6,841,121 rows × 4 cols):
+    ✅ No missing values
+
+  Sales (30,490 rows × 1947 cols):
+    ✅ No missing values in any column
+
+  📋 2. CONSISTENCY
+  --------------------------------------------------
+  Calendar date range: 2011-01-29 00:00:00 → 2016-06-19 00:00:00
+  Expected days: 1969, Actual rows: 1969
+  ✅ No gaps in calendar — continuous daily coverage
+
+  Sales day columns: d_1 to d_1941 (1941 days)
+  Calendar d column: d_1 to d_1969 (1969 entries)
+  ✅ All 1941 sales days have calendar coverage (28 extra calendar days for future forecasting)
+
+  📋 3. DUPLICATES
+  --------------------------------------------------
+  calendar: ✅ None
+  sell_prices: ✅ None
+  sales: ✅ None
+
+  📋 4. DATA TYPE OBSERVATIONS
+  --------------------------------------------------
+  Calendar.date: datetime64[us] — ✅ Parsed as datetime
+  Sales day columns: int64 — ✅ Integer type (unit sales counts)
+  Sell_prices.sell_price: float64 — ✅ Float type (USD prices)
+
+  📋 5. ZERO INFLATION
+  --------------------------------------------------
+  Zero-sales percentage: 68.0%
+  → This is a defining characteristic of the M5 dataset
+  → Many items have intermittent demand (sparse time series)
+  → Recommendation: Consider Tweedie/Poisson loss functions and
+    zero-inflated models in Stage 3
+
+  📋 6. PRICE OBSERVATIONS
+  --------------------------------------------------
+  Price range: $0.01 — $107.32
+  Median price: $3.47
+  Mean price: $4.41
+  Price entries: 6,841,121 / 8,598,180 possible (79.6% coverage)
+  → Not all items are sold in all stores every week
+  → Missing prices likely indicate items not yet on shelf
+
+  📋 7. EVENTS & SNAP
+  --------------------------------------------------
+  Days with primary event: 162 (8.2%)
+  Days with secondary event: 5 (0.3%)
+  Event types:
+    • Religious: 55 occurrences
+    • National: 52 occurrences
+    • Cultural: 37 occurrences
+    • Sporting: 18 occurrences
+  snap_CA: 650 SNAP-active days (33.0%)
+  snap_TX: 650 SNAP-active days (33.0%)
+  snap_WI: 650 SNAP-active days (33.0%)
+
+  📋 8. MEMORY USAGE
+  --------------------------------------------------
+  calendar: 0.6 MB
+  sell_prices: 853.1 MB
+  sales: 461.9 MB
+  TOTAL: 1315.6 MB
+  → Recommendation: Downcast int64 → int16 for sales columns
+    and use category dtype for identifiers in Stage 2
+
+  📋 9. RECOMMENDATIONS FOR STAGE 2
+  --------------------------------------------------
+  1. MELT sales from wide → long format (item-store-day granularity)
+  2. JOIN with calendar (on d) to add date features
+  3. JOIN with sell_prices (on store_id, item_id, wm_yr_wk) for prices
+  4. DOWNCAST dtypes to reduce memory (int64→int16, object→category)
+  5. HANDLE missing event columns (fill with 'no_event' or similar)
+  6. CREATE time-based features (lag, rolling mean, day-of-week, etc.)
+  7. HANDLE zero-inflated sales (log1p transform, clip, or special modeling)
+  8. VERIFY temporal ordering — ensure no look-ahead leakage
+  9. DEFINE train/validation/test split (temporal walk-forward)
+
+================================================================================

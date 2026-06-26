@@ -1,0 +1,31 @@
+{
+    "Baseline": {
+        "Total_Demand": 13261.0,
+        "Total_Sold": 9701.0,
+        "Stockout_Units": 3560.0,
+        "Overstock_Units": 2242.0,
+        "Fill_Rate": 0.7315436241610739,
+        "Service_Level": 0.8332142857142857,
+        "Holding_Cost": 264.781494140625,
+        "Stockout_Cost": 3130.68408203125,
+        "Total_Cost": 3395.465576171875
+    },
+    "Proposed": {
+        "Total_Demand": 13261.0,
+        "Total_Sold": 11246.0,
+        "Stockout_Units": 2015.0,
+        "Overstock_Units": 8587.0,
+        "Fill_Rate": 0.8480506749113943,
+        "Service_Level": 0.9217857142857143,
+        "Holding_Cost": 1202.3825226426125,
+        "Stockout_Cost": 1663.6440616846085,
+        "Total_Cost": 2866.026584327221
+    },
+    "Impact": {
+        "Net_Savings": 529.4389918446541,
+        "Cost_Reduction_Pct": 0.15592530095432616,
+        "Stockout_Reduction_Units": 1545.0,
+        "Extra_Holding_Cost": 937.6010285019875,
+        "ROI": 0.564674073246851
+    }
+}

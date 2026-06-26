@@ -1,0 +1,21 @@
+2026-06-26 00:39:41 | INFO     | supply_chain | ============================================================
+2026-06-26 00:39:41 | INFO     | supply_chain | DATASET VALIDATION
+2026-06-26 00:39:41 | INFO     | supply_chain | ============================================================
+2026-06-26 00:39:41 | INFO     | supply_chain |   ✓ FOUND: data/calendar.csv
+2026-06-26 00:39:41 | INFO     | supply_chain |   ✓ FOUND: data/sell_prices.csv
+2026-06-26 00:39:41 | INFO     | supply_chain |   ✓ FOUND: data/sales_train_evaluation.csv
+2026-06-26 00:39:41 | INFO     | supply_chain | All required files validated successfully.
+
+2026-06-26 00:39:41 | INFO     | supply_chain | ============================================================
+2026-06-26 00:39:41 | INFO     | supply_chain | LOADING DATASETS
+2026-06-26 00:39:41 | INFO     | supply_chain | ============================================================
+2026-06-26 00:39:41 | INFO     | supply_chain | Loading: data/calendar.csv
+2026-06-26 00:39:41 | INFO     | supply_chain |   → Shape: 1,969 rows × 14 cols | Memory: 0.6 MB
+2026-06-26 00:39:41 | INFO     | supply_chain | Loading: data/sell_prices.csv
+2026-06-26 00:39:44 | INFO     | supply_chain |   → Shape: 6,841,121 rows × 4 cols | Memory: 853.1 MB
+2026-06-26 00:39:44 | INFO     | supply_chain | Loading: data/sales_train_evaluation.csv
+2026-06-26 00:39:47 | INFO     | supply_chain |   → Shape: 30,490 rows × 1947 cols | Memory: 461.9 MB
+2026-06-26 00:39:47 | INFO     | supply_chain | 
+All datasets loaded successfully.
+2026-06-26 00:39:47 | INFO     | supply_chain | ============================================================
+2026-06-26 00:39:55 | INFO     | supply_chain | Data quality report saved to: /Users/achyutakumarsingh/Downloads/MLProj/outputs/reports/stage1_data_quality_report.txt

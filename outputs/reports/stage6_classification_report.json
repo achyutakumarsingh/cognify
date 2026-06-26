@@ -1,0 +1,17 @@
+{
+    "risk_level_counts": {
+        "Low": 3360,
+        "Medium": 1402,
+        "High": 838
+    },
+    "score_boundaries": {
+        "low_threshold": 23.264000000000003,
+        "medium_threshold": 34.79
+    },
+    "weights_used": {
+        "interval_width": 0.3,
+        "forecast_error": 0.25,
+        "historical_volatility": 0.25,
+        "calibration_penalty": 0.2
+    }
+}

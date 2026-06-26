@@ -1,0 +1,90 @@
+# ==============================================================================
+# Preprocessing Configuration — Stage 2
+# ==============================================================================
+# All tunable parameters for the data cleaning and feature engineering
+# pipeline are centralized here. Change values here to affect all modules.
+# ==============================================================================
+
+preprocessing:
+
+  # --- Dtype Casting ---
+  # Downcast these columns to save memory.
+  # Rationale: daily unit sales never exceed 763 in M5 → int16 is safe.
+  #            Store/category IDs are low-cardinality → category dtype.
+  int16_columns:
+    - "sales"       # target variable: unit counts (0-763 range in M5)
+    - "wday"
+    - "month"
+    - "year"
+
+  int8_columns:
+    - "snap_CA"
+    - "snap_TX"
+    - "snap_WI"
+
+  float32_columns:
+    - "sell_price"
+
+  category_columns:
+    - "item_id"
+    - "dept_id"
+    - "cat_id"
+    - "store_id"
+    - "state_id"
+    - "weekday"
+    - "event_name_1"
+    - "event_type_1"
+    - "event_name_2"
+    - "event_type_2"
+    - "event_name_1_filled"
+    - "event_type_1_filled"
+
+  # --- Missing Value Imputation ---
+  event_fill_value: "no_event"     # For missing event_name / event_type
+  price_fill_strategy: "ffill"     # Forward-fill missing prices within item-store
+
+  # --- Lag Features ---
+  # Why these lags?
+  #   lag_7:  captures same-day-of-week seasonality (weekly cycle)
+  #   lag_14: two-week lookback (bi-weekly patterns)
+  #   lag_28: monthly lookback (same weekday 4 weeks ago — M5 standard)
+  lag_windows: [7, 14, 28]
+
+  # --- Rolling Window Features ---
+  # Why these windows?
+  #   7:  short-term trend (weekly average)
+  #   14: medium-term trend (bi-weekly)
+  #   28: longer-term trend (monthly) — key for slow-moving items
+  rolling_windows: [7, 14, 28]
+  rolling_min_periods: 1    # Allow partial windows to avoid NaN at series start
+
+  # --- Temporal Split ---
+  # The M5 evaluation dataset has 1,941 day columns (d_1 to d_1941).
+  # The last 28 days are the evaluation/test period (M5 competition).
+  # We further hold out the 28 days before that as validation.
+  #
+  # Splits (by day index, 1-indexed):
+  #   Training   : d_1    → d_1885  (1885 days)
+  #   Validation : d_1886 → d_1913  ( 28 days — same-horizon tuning)
+  #   Test/Eval  : d_1914 → d_1941  ( 28 days — held-out evaluation)
+  #
+  # Why 28-day horizon?
+  #   M5 competition required 28-day forecasts. Using the same horizon
+  #   for validation ensures our metric estimates are unbiased.
+  train_end_day: 1885
+  val_end_day: 1913
+  test_end_day: 1941
+
+  # --- Store-by-Store Processing ---
+  # Process one store at a time to keep peak memory manageable.
+  # Each store slice is ~5,944,590 rows after melting (3,049 items × 1,941 days).
+  # This keeps peak memory per batch under ~1 GB.
+  process_by_store: true
+
+# --- Output Paths ---
+outputs:
+  processed_dir: "data/processed/"
+  features_parquet: "data/processed/features.parquet"
+  feature_metadata: "data/processed/feature_metadata.json"
+  preprocessing_config_snapshot: "data/processed/preprocessing_config_used.yaml"
+  split_index: "data/processed/temporal_split_index.json"
