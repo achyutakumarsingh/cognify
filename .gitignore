@@ -7,7 +7,7 @@ models/*.json
 models/*.pkl
 
 # Outputs (Logs, generated parquet files for dashboard)
-outputs/simulation/*.parquet
+# We keep output parquets because they are tiny and required for the dashboard.
 # We can keep reports/ JSONs since they are small metrics
 
 # Python
