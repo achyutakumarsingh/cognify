@@ -1,76 +1,56 @@
 # 3-Minute Demo Script: Supply Chain Decision Intelligence
 
 ## Setup (Before Demo)
-- Ensure the app is running via `streamlit run app.py` at `http://localhost:8501`.
+- Ensure the app is running via `streamlit run app.py` (locally at `http://localhost:8501` or on Streamlit Cloud at `https://cognifyaiprediction.streamlit.app/`).
 - Have the app open full-screen in a clean browser window.
 - Ensure the sidebar is expanded.
+- Make sure **Guided Demo Mode** is *unchecked* to start.
 
 ---
 
-## [0:00 - 0:30] Introduction & The Problem
-*(Screen: Start on **Page 1: Executive Overview**)*
+## [0:00 - 0:45] Step 1: Introduction & Executive Overview
+*(Action: Check the **🚀 Guided Demo Mode** box in the sidebar)*
 
 **Speaker:**
-> "Hello judges. Welcome to our Supply Chain Decision Intelligence platform. Traditional AI supply chain systems give managers a single, deterministic number—a point forecast. But if you don't know the *confidence* of that forecast, you are forced to guess your safety stock. Today, we're going to show you how we solved this by translating statistical uncertainty into automated financial decisions."
+> "Hello judges. Welcome to our Supply Chain Decision Intelligence platform. Traditional AI supply chain systems give managers a single, deterministic number—a point forecast. But if you don't know the *confidence* of that forecast, you are forced to guess safety stock, causing either costly stockouts or bloated inventory."
 
-> "Here on the Executive Overview, you can see our system is currently monitoring over 3,000 products, and our Risk Engine has immediately flagged 838 of them as High Risk requiring planner attention."
+> "To solve this, we built a Decision Intelligence tool. Looking at the **Executive Overview**, you can see we monitor over 3,000 products. The AI has flagged 838 high-risk items requiring attention. By implementing our risk-aware safety stock policy instead of baseline point forecasting, we reduce total operating costs by 15.6% and increase service levels to 92.2%."
 
 ---
 
-## [0:30 - 1:00] Forecasting & Uncertainty
-*(Screen: Click **Page 2: Demand Forecasting**)*
+## [0:45 - 1:30] Step 2: Risk & Operations (The Workflow)
+*(Action: Click the **Next Step ➡️** button on the top banner)*
 
 **Speaker:**
-> "Under the hood, we trained a highly optimized XGBoost engine to handle the zero-inflated retail sales data. But we didn't stop at point forecasts."
+> "Now, we step into the **Risk & Operations** center. Planners shouldn't have to analyze math models. We consolidate product data into a simple risk triage table. Let's look at a specific item."
 
-*(Screen: Click **Page 3: Uncertainty Analysis**)*
+*(Action: Click the 'Single Product Analysis' tab and search for `FOODS_1_001` or look at the first default product)*
+> "Here, we plot the actual demand against our XGBoost forecast, but we wrap it in a statistically calibrated 90% Conformal Prediction interval. The pink dashed line is our recommended safety stock, scaling up automatically during periods of high demand uncertainty."
 
-**Speaker:**
-> "To prevent planners from guessing, we wrapped every single XGBoost prediction in a statistically guaranteed confidence interval using Split Conformal Prediction."
-*(Action: Slowly drag the Confidence Slider from 50% to 90%)*
-> "As you can see, our system doesn't require retraining to change risk tolerances. A manager can dynamically adjust their confidence target, and the conformal intervals immediately recalculate on the fly."
+*(Action: Scroll down and click the **⚙️ Send PO to ERP (Demo)** button)*
+> "Most importantly, this is a workflow tool. With one click, the planner can approve the PO recommendations and automatically dispatch the modified safety stock targets directly to SAP or Oracle Cloud ERP via simulated REST API triggers."
 
 ---
 
-## [1:00 - 1:30] Risk Triage
-*(Screen: Click **Page 5: Risk Intelligence**)*
+## [1:30 - 2:15] Step 3: Scenario Simulator (Interactive Sandbox)
+*(Action: Click the **Next Step ➡️** button on the top banner)*
 
 **Speaker:**
-> "We don't expect supply chain managers to analyze probability distributions. So, we built a Risk Engine that absorbs the model's uncertainty, historical errors, and volatility, outputting a composite Risk Score from 0 to 100."
-*(Action: Sort the table by "Risk Score" descending)*
-> "The system automatically segments the entire catalog, telling the planner exactly which items are High Risk and explicitly what action to take—such as increasing safety stock to the 95th percentile."
+> "But what happens if lead times double or supply chain volatility spikes? In our **Scenario Simulator**, planners have a real-time sandbox."
+
+*(Action: Slide the 'Replenishment Lead Time' from 1 day to 5 days, and then slide 'Demand Volatility Multiplier' to 1.3x)*
+> "As I adjust these sliders, our in-memory engine uses supply chain physics—scaling uncertainty bounds by the square root of lead time and volatility—to immediately recalculate and display the new expected safety stock holding costs, stockout probabilities, and net savings. Planners can see the exact break-even point for deploying the AI policy."
 
 ---
 
-## [1:30 - 2:00] Business Impact Simulation
-*(Screen: Click **Page 6: Business Impact**)*
+## [2:15 - 3:00] Step 4: Technical Engine & Close
+*(Action: Click the **Next Step ➡️** button on the top banner)*
 
 **Speaker:**
-> "But does this actually save money? Yes. We built a financial simulator comparing a baseline strategy—ordering exactly what the model predicts—against our Risk-Aware system."
-*(Action: Highlight the Net Savings KPI card)*
-> "By dynamically shifting safety stock only to the items with high uncertainty, we reduced total operating costs by 15.6%, eliminated over 1,500 stockout units, and bumped service levels to over 92%."
+> "Finally, for the technical judges, our **Technical Engine** exposes the statistical integrity of our models."
 
----
+*(Action: Briefly click through the 'Point Forecast & Residuals', 'Uncertainty Bounds', and 'Calibration & Reliability' tabs)*
+> "We validate the point forecast residuals, compare Split Conformal Prediction against Quantile Regression, and plot our reliability diagrams. Our Conformal bounds achieve ~87.5% empirical coverage, showing our uncertainty intervals are statistically calibrated and reliable."
 
-## [2:00 - 2:30] Live Scenario & Explainability
-*(Screen: Click **Page 7: Scenario Simulator**)*
-
-**Speaker:**
-> "Supply chain economics change rapidly. If warehouse holding costs suddenly double, planners can adjust this slider right here..."
-*(Action: Drag the Holding Cost Rate slider higher)*
-> "...and the system instantly recalculates the optimal buffer bounds and financial ROI across the entire network."
-
-*(Screen: Click **Page 9: Explainability**)*
-
-**Speaker:**
-> "Finally, we know trust is the biggest barrier to AI adoption. For every recommendation, our system generates a plain-English explanation of exactly *why* the AI chose that risk level and *how* the uncertainty components influenced the decision."
-
----
-
-## [2:30 - 3:00] Automated Demo & Close
-*(Screen: Click **Page 10: Demo Mode**)*
-
-**Speaker:**
-> "If you'd like to see the entire pipeline summarized, we've built an automated demo mode directly into the application."
-*(Action: Click "▶ Run Demo" and let the UI progress bars run)*
-> "In summary, we've bridged the gap between pure Data Science and Operations. We turned raw probabilistic bounds into a 15.6% cost reduction, packaged perfectly for enterprise deployment. Thank you."
+*(Action: Click **Finish Demo 🔁**)*
+> "By bridging the gap between advanced statistics and daily logistics workflows, we've turned raw model outputs into a 15.6% cost reduction. The system is live, scalable, and ready for deployment. Thank you, and we'd love to take your questions."

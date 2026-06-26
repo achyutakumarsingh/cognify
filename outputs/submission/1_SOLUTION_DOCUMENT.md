@@ -59,17 +59,19 @@ We built a Business Impact Simulator to compare two operational strategies:
 The simulation applied real-world holding cost rates (5%) and stockout penalties (40%), proving that the risk-aware strategy drastically reduces stockouts and increases overall profitability.
 
 ### Stage 8: Executive Dashboard
-The entire ML pipeline was packaged into a 10-page Streamlit application. Rather than simply showing data plots, the dashboard translates the complex statistical models into plain-English recommendations ("Increase safety stock by 15 units. Expected ROI: 1.2x") for non-technical supply chain managers.
+The entire ML pipeline and decision engine are packaged into a streamlined, four-page Streamlit application. Rather than simply showing data plots, the dashboard translates complex statistical models into plain-English recommendations ("Increase safety stock by 15 units. Penalty Mitigation Ratio: 5.6x") and includes simulated interactive workflows to push these parameters directly to a mock ERP.
 
 ---
 
 ## 4. Prototype Design
 
 ### Dashboard & User Workflow
-The platform is designed as an interactive, zero-latency decision tool.
-- **Executive Overview:** Provides the "C-Suite" view (total ROI, stockout reduction, risk distribution).
-- **Interactive Sandbox:** The *Scenario Simulator* allows users to drag sliders to adjust holding costs or confidence targets and immediately see how the system's recommendations adapt financially.
-- **Explainability:** For every recommendation, the system provides a plain-English translation (e.g., *"This product is classified as HIGH RISK because its prediction interval is exceptionally wide relative to its historical baseline"*).
+The platform is designed as an interactive, zero-latency decision tool composed of exactly four sections:
+- **1. Executive Overview:** Provides the "C-Suite" view (net savings, stockout reduction, service levels, avg risk) alongside risk distribution charts, an executive briefing, and a technical appendix explaining key assumptions.
+- **2. Risk & Operations:** The operational workspace. Planners can triage high-risk items, select SKUs to view actual vs. forecast charts (with 90% conformal prediction bands), read plain-English risk factors, and click to simulate ERP actions (Approve PO, Send to ERP).
+- **3. Scenario Simulator:** An interactive supply chain physics sandbox. Planners can adjust holding costs, stockout penalties, target confidence, replenishment lead time, and macro demand volatility to immediately recalculate optimal buffer bounds live.
+- **4. Technical Engine:** A model validator for data scientists. Exposes Tweedie XGBoost error metrics (WAPE, RMSE), residuals distributions, conformal calibration curves, segment coverage breakdowns, and global feature importance.
+- **Guided Demo Mode:** A global sidebar controller that walks judges through the real pages of the dashboard with narrative banners in under 3 minutes.
 
 ---
 

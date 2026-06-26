@@ -1,6 +1,6 @@
 # Supply Chain Decision Intelligence Platform
 
-> **Final Submission for Indo-Swiss Hackathon**
+> **Final Submission for Hackathon Round 2**
 
 An enterprise-ready AI decision-support system that goes beyond traditional point forecasting. This platform predicts product demand, quantifies uncertainty with statistically calibrated confidence intervals, evaluates risk levels, and provides actionable inventory recommendations driven by business impact simulations.
 
@@ -79,32 +79,31 @@ streamlit run app.py
 
 ## ▶️ Demo Guide (For Judges)
 
-This application includes an automated, guided demonstration designed specifically for hackathon presentations.
+This application includes a **🚀 Guided Demo Mode** built directly into the main interface to walk judges through the entire end-to-end workflow in under 3 minutes.
 
 **How to run the demo:**
 1. Launch the application using the deployment instructions above.
-2. In the left sidebar navigation, click on **▶️ Demo Mode**.
-3. Click the prominent **▶ Run Demo** button on the page.
-4. The system will automatically narrate the entire 7-stage ML pipeline — from historical data ingestion to business impact — in under 3 minutes, rendering real-time UI components at each step.
+2. In the left sidebar navigation, check the box for **🚀 Guided Demo Mode**.
+3. A progress tracker will appear in the sidebar, and a prominent guidance banner will slide in at the top of the main area.
+4. Read the guidance tip for each page, explore the metrics, and click **Next Step ➡️** to proceed.
+5. The system will automatically walk you through:
+   - **Step 1:** Executive Overview (Financial cost reductions & ROI)
+   - **Step 2:** Risk & Operations (SKU triage & ERP actions)
+   - **Step 3:** Scenario Simulator (Live parameters sandbox)
+   - **Step 4:** Technical Engine (Model calibration validation)
 
 ---
 
 ## 📖 User Guide
 
-The dashboard is composed of 10 modular pages, each designed to answer a specific business question. Use the sidebar to navigate between them.
+The dashboard has been streamlined into exactly four sections designed to answer operational questions. Use the sidebar to navigate between them.
 
 | Page | Purpose & Features |
 |---|---|
-| **🏢 1. Executive Overview** | High-level business summary. Displays top-line KPIs (Total Cost Reduction, Service Level, ROI) alongside risk distribution charts and a geographic store heatmap. |
-| **📈 2. Demand Forecasting** | Technical view of the XGBoost model. Interactively filter by store and product to visualize historical demand against point forecasts. Includes global feature importance. |
-| **🎯 3. Uncertainty Analysis** | Compare Quantile Regression vs. Conformal Prediction. Features an interactive **Confidence Slider** (50% to 95%) that dynamically resizes prediction intervals. |
-| **📐 4. Calibration Analysis** | Statistical validation. Displays reliability diagrams and interval coverage across different volatility segments to prove the uncertainty estimates are trustworthy. |
-| **⚠️ 5. Risk Intelligence** | Actionable triage. Sortable table of all products by Risk Score, Savings Potential, or Forecast Error. Highlights the top highest-risk items requiring attention. |
-| **💰 6. Business Impact** | Financial proof. Compares the "Baseline" (ordering exact forecast) vs the "Intelligent System" (risk-aware buffering). Shows simulated reductions in stockouts and holding costs. |
-| **🔬 7. Scenario Simulator** | Interactive sandbox. Adjust holding cost rates, stockout penalties, and confidence targets to immediately see how recommendations and net savings change. |
-| **🔍 8. Product Drill-Down** | Search engine for specific SKUs. Enter a product ID to pull up its complete forecast, uncertainty bounds, risk level, and final inventory recommendation on one screen. |
-| **💬 9. Explainability** | Plain-English translation of AI outputs. Explains *why* a product received a specific risk score and *what* exact operational action the planner should take, avoiding technical jargon. |
-| **▶️ 10. Demo Mode** | The automated presentation tool (see Demo Guide above). |
+| **🏢 1. Executive Overview** | **Business executive view.** Displays top-line KPIs (Total Cost Savings, Service Level ▲, Penalty Mitigation Ratio) alongside risk distribution charts, an executive briefing, and a technical appendix documenting known limitations. |
+| **🔴 2. Risk & Operations** | **Planner operational tool.** Consolidates risk intelligence tables, product search/filters, and deep-dive forecast charts (with conformal interval bounds). Includes interactive simulated ERP triggers to approve purchase orders. |
+| **⚙️ 3. Scenario Simulator** | **Interactive cost sandbox.** Adjust holding costs, stockout penalties, confidence thresholds, lead times, and volatility levels. Features dynamic inventory calculations that update expected costs and service levels on the fly. |
+| **🧠 4. Technical Engine** | **Model validator for technical judges.** Combines point forecast residual analyses, conformal prediction vs. quantile regression comparisons, calibration reliability curves, and global XGBoost feature gains. |
 
 ---
 
@@ -113,8 +112,15 @@ The dashboard is composed of 10 modular pages, each designed to answer a specifi
 ```text
 MLProj/
 ├── app.py                    # Main Streamlit Application Entry Point
+├── Dockerfile                # Deployment container configuration
+├── Procfile                  # Startup configuration for PaaS (Heroku/Render)
 ├── requirements.txt          # Python Dependency List
 ├── README.md                 # Project Documentation (This File)
+├── outputs/                  # Artifacts & Persisted Data
+│   ├── submission/           # Hackathon deliverables (Pitch deck, demo script, critique)
+│   ├── simulation/           # Parquet files for dashboard consumption
+│   ├── reports/              # JSON KPI metrics & summaries
+│   └── predictions/          # Model forecasts & uncertainty bounds
 │
 ├── dashboard/                # UI Presentation Layer (Stage 8)
 │   ├── data_loader.py        # Centralized cached data loading
@@ -122,32 +128,22 @@ MLProj/
 │   │   └── ui.py             # Reusable UI primitives (KPI cards, styling)
 │   └── pages/                # Streamlit individual page modules
 │       ├── p1_executive_overview.py
-│       ├── p2_demand_forecasting.py
-│       ├── p3_uncertainty_analysis.py
-│       ├── p4_calibration_dashboard.py
-│       ├── p5_risk_intelligence.py
-│       ├── p6_business_impact.py
-│       ├── p7_scenario_simulator.py
-│       ├── p8_product_drilldown.py
-│       ├── p9_explainability.py
-│       └── p10_demo_mode.py
+│       ├── p2_risk_operations.py
+│       ├── p3_scenario_simulator.py
+│       └── p4_technical_engine.py
 │
-├── src/                      # Core Machine Learning Pipeline
-│   ├── data/                 # Stage 1-2: Loading, EDA, Preprocessing
-│   ├── models/               # Stage 3: XGBoost Forecasting
-│   ├── uncertainty/          # Stage 4: Quantile & Conformal Prediction
-│   ├── evaluation/           # Stage 5: Calibration & Scoring
-│   └── decision/             # Stage 6-7: Risk Triage & Financial Simulation
-│
-└── outputs/                  # Artifacts & Persisted Data
-    ├── simulation/           # Parquet files for dashboard consumption
-    └── reports/              # JSON KPI metrics & summaries
+└── src/                      # Core Machine Learning Pipeline
+    ├── data/                 # Stage 1-2: Loading, EDA, Preprocessing
+    ├── models/               # Stage 3: XGBoost Forecasting
+    ├── uncertainty/          # Stage 4: Quantile & Conformal Prediction
+    ├── evaluation/           # Stage 5: Calibration & Scoring
+    └── decision/             # Stage 6-7: Risk Triage & Financial Simulation
 ```
 
 ---
 
 ## ✨ Application Quality & Engineering Practices
 - **Performance:** 100% of data loading is cached via `@st.cache_data` preventing redundant I/O.
-- **Modularity:** UI logic is cleanly separated into 10 individual page modules.
+- **Modularity:** UI logic is cleanly separated into 4 distinct page modules.
 - **Robustness:** Handles missing data safely with graceful fallbacks.
-- **Enterprise UI:** Features a custom CSS injected design system (Inter typography, responsive grid layouts, glassmorphism elements, intuitive color coding).
+- **Enterprise UI:** Features a custom CSS injected design system (Inter typography, responsive layouts, glassmorphism elements, and intuitive risk color-coding).

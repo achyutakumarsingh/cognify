@@ -89,13 +89,13 @@
 ---
 
 ## Slide 9: The Executive Dashboard
-**Headline:** Zero Latency Decision Intelligence
+**Headline:** From Data Dashboard to Operational Workflow
 **Bullet Points:**
-- Built entirely in Streamlit.
-- Features an interactive "Scenario Simulator" to adjust financial parameters live.
-- "Explainability" tab translates AI decisions into plain English.
+- Streamlined 4-page interface: Executive Briefing, Risk & Operations, Scenario Sandbox, and Technical Engine.
+- Exposes mock ERP buttons (Approve PO, Send to ERP) to simulate a complete loop from prediction to logistics action.
+- Integrated **Guided Demo Mode** sidebar switch allows judges to navigate the actual application easily.
 **Speaker Notes:**
-> "All of this complexity is abstracted behind a beautiful, enterprise-grade Streamlit application. Planners can search specific products, run live scenario simulations, and read plain-English explanations for every AI recommendation."
+> "All of this complexity is abstracted behind a beautiful, enterprise-grade Streamlit application. Planners can search specific products, run live scenario simulations, and read plain-English explanations for every AI recommendation. We've even added action buttons so they can simulate pushing purchase orders straight to SAP or Oracle ERP endpoints, transforming this from a passive dashboard into an active workflow tool."
 
 ---
 

@@ -135,19 +135,15 @@ graph TD
     B --> C[(Outputs: Parquet & JSON)]
     
     A --> D{Sidebar Navigation}
+    A --> E[🚀 Guided Demo Overlay]
     
     D --> P1[1. Executive Overview]
-    D --> P2[2. Demand Forecasting]
-    D --> P3[3. Uncertainty Analysis]
-    D --> P4[4. Calibration Dashboard]
-    D --> P5[5. Risk Intelligence]
-    D --> P6[6. Business Impact]
-    D --> P7[7. Scenario Simulator]
-    D --> P8[8. Product Drill-Down]
-    D --> P9[9. Explainability]
-    D --> P10[10. Demo Mode]
+    D --> P2[2. Risk & Operations]
+    D --> P3[3. Scenario Simulator]
+    D --> P4[4. Technical Engine]
+    
+    E -.->|Controls Navigation| D
     
     P1 -.-> U[components/ui.py]
     P2 -.-> U
-    P5 -.-> U
 ```

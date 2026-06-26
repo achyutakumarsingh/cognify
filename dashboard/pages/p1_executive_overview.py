@@ -29,6 +29,7 @@ def render():
     svc_baseline       = fin["Baseline"]["Service_Level"] * 100
     svc_proposed       = fin["Proposed"]["Service_Level"] * 100
     svc_delta          = svc_proposed - svc_baseline
+    roi                = fin["Impact"]["ROI"]
 
     c1, c2, c3, c4, c5, c6 = st.columns(6)
     with c1:
@@ -37,8 +38,8 @@ def render():
         kpi_card("High-Risk Products", f"{high_risk_products:,}",
                  delta="Require immediate attention", icon="🔴", color="#f87171")
     with c3:
-        kpi_card("Expected Cost Savings", f"${net_savings:,.0f}",
-                 delta="vs. baseline ordering", icon="💰", color="#4ade80")
+        kpi_card("Expected Cost Savings", f"${net_savings:,.2f}",
+                 delta="Over evaluation window", icon="💰", color="#4ade80")
     with c4:
         kpi_card("Stockout Reduction", f"{stockout_reduction:,.0f} units",
                  delta="fewer lost-sale events", icon="📉", color="#4ade80")
@@ -46,9 +47,16 @@ def render():
         kpi_card("Service Level", f"{svc_proposed:.1f}%",
                  delta=f"▲ {svc_delta:.1f}% vs baseline", icon="⭐", color="#fbbf24")
     with c6:
-        roi = fin["Impact"]["ROI"]
-        kpi_card("Implied ROI", f"{roi:.2f}x",
-                 delta="per $1 additional safety stock", icon="📈", color="#34d399")
+        kpi_card("Penalty Mitigation Ratio", f"{roi:.2f}x",
+                 delta="Penalty avoided per $1 safety stock", icon="📈", color="#34d399")
+
+    # Add honest data scope label right under the KPIs
+    st.markdown(
+        "<div style='text-align:right;font-size:0.75rem;color:#64748b;margin-top:-10px'>"
+        "⚠️ Metrics are evaluated on a representative backtest subset of 5,600 product-store testing periods over 28 days."
+        "</div>",
+        unsafe_allow_html=True
+    )
 
     st.markdown("<br>", unsafe_allow_html=True)
 
@@ -82,15 +90,15 @@ def render():
         labels_m = ["Holding Cost", "Stockout Cost", "Total Cost"]
         fig2 = go.Figure()
         fig2.add_trace(go.Bar(
-            name="Baseline", x=labels_m,
+            name="Baseline (Point Forecast)", x=labels_m,
             y=[fin["Baseline"][m] for m in metrics],
-            marker_color="#64748b", text=[f"${fin['Baseline'][m]:,.0f}" for m in metrics],
+            marker_color="#64748b", text=[f"${fin['Baseline'][m]:,.2f}" for m in metrics],
             textposition="outside"
         ))
         fig2.add_trace(go.Bar(
-            name="Proposed", x=labels_m,
+            name="Proposed (Risk-Aware)", x=labels_m,
             y=[fin["Proposed"][m] for m in metrics],
-            marker_color="#4f46e5", text=[f"${fin['Proposed'][m]:,.0f}" for m in metrics],
+            marker_color="#4f46e5", text=[f"${fin['Proposed'][m]:,.2f}" for m in metrics],
             textposition="outside"
         ))
         fig2.update_layout(
@@ -101,24 +109,26 @@ def render():
 
     # ─── Executive Summary ────────────────────────────────────────────────────
     st.markdown("---")
-    st.markdown("#### 📋 Executive Summary")
-    insight_box(
-        f"<b>Today's Operational Status:</b> The AI forecasting system is monitoring "
-        f"<b>{total_products:,} products</b> across all stores. The risk engine has identified "
-        f"<b>{high_risk_products:,} high-risk products</b> requiring immediate planner attention."
-        f"<br><br>"
-        f"By switching from traditional point-forecast ordering to risk-aware intelligent replenishment, "
-        f"the business is expected to achieve a <b>{fin['Impact']['Cost_Reduction_Pct']*100:.1f}% reduction "
-        f"in total inventory costs</b>, eliminate <b>{stockout_reduction:,.0f} stockout units</b>, and "
-        f"improve service levels from <b>{svc_baseline:.1f}%</b> to <b>{svc_proposed:.1f}%</b>."
-        f"<br><br>"
-        f"For every $1 of additional safety stock investment, the system returns "
-        f"<b>${roi:.2f} in avoided stockout penalties</b> — a positive ROI at standard "
-        f"supply chain economics.",
-        "success"
+    st.markdown("#### 📋 Executive Briefing")
+    
+    summary_text = (
+        f"<b>1. Daily Summary:</b> Today, the AI system scanned <b>{total_products:,} items</b> across all store locations. "
+        f"The Risk Engine flagged <b>{high_risk_products:,} products</b> in critical status due to high demand volatility or "
+        f"widened uncertainty bounds, requiring planner action.<br><br>"
+        f"<b>2. Recommended Actions:</b> We advise supply chain planners to open the <b>Risk & Operations</b> tab, review "
+        f"the high-risk list, and approve the recommended purchase order buffers. This will automatically increase inventory "
+        f"levels to the Conformal 90% confidence upper bound for volatile items, preventing critical stockouts.<br><br>"
+        f"<b>3. Operational & Financial Impact:</b> Migrating from traditional point-forecast replenishment to our risk-aware "
+        f"policy is projected to reduce total inventory costs by <b>{fin['Impact']['Cost_Reduction_Pct']*100:.1f}%</b>, "
+        f"eliminate <b>{stockout_reduction:,.0f} units of stockouts</b>, and increase the service level from "
+        f"<b>{svc_baseline:.1f}% to {svc_proposed:.1f}%</b>.<br><br>"
+        f"<b>4. Investment Efficiency:</b> For every $1 of additional safety stock holding cost invested, the business mitigates "
+        f"<b>${roi:.2f} in stockout penalties</b> (avoided lost revenue and customer service fees), yielding a highly efficient "
+        f"operational return."
     )
+    insight_box(summary_text, "info")
 
-    # ─── Risk by store heatmap ────────────────────────────────────────────────
+    # ─── Risk by store ────────────────────────────────────────────────────────
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("#### 🗺️ Risk Concentration by Store")
     store_risk = df.groupby("store_id")["Risk_Score"].mean().reset_index()
@@ -135,3 +145,27 @@ def render():
         coloraxis_showscale=False,
     )
     st.plotly_chart(fig3, use_container_width=True)
+
+    # ─── Known Limitations & Assumptions (Technical Credibility) ──────────────
+    st.markdown("---")
+    with st.expander("🔬 Technical Appendix: Assumptions & Model Limitations"):
+        st.markdown("""
+        ### Current Model Assumptions & Limitations
+        To maintain professional and technical honesty, the underlying mathematical and systems limits of this prototype are documented below:
+        
+        1. **Global Conformal Calibration:**
+           - *Assumption:* The Split Conformal Prediction correction factor ($\\hat{q}$) is computed globally across the entire test partition residuals.
+           - *Limitation:* It assumes residual variance is uniform (homoscedastic). In practice, high-volume products have different residual spreads than low-volume products. Locally adaptive conformal bands would improve individual SKU coverage metrics.
+        
+        2. **Quantile Model Assumptions:**
+           - *Assumption:* Quantile Regression models for $q_{05}$ and $q_{95}$ are trained independently using Pinball Loss.
+           - *Limitation:* There are no mathematical non-crossing constraints. In rare scenarios of severe volatility, the $q_{05}$ model could cross above the $q_{95}$ model.
+           
+        3. **No Active ERP Integration:**
+           - *Assumption:* The action triggers (e.g. *Send to ERP*, *Approve PO*) are mock workflows.
+           - *Limitation:* They generate simulated JSON payloads and toast notifications. In a production deployment, this would be wired directly to standard SAP or Oracle REST APIs via OAuth2.
+           
+        4. **Simulation Constraints:**
+           - *Assumption:* The holding cost rate is a flat 5% of the product cost price, and the stockout penalty is a flat 40% (representing lost sales + brand damage penalties).
+           - *Limitation:* Real-world holding and stockout penalties fluctuate by department and store location.
+        """)
