@@ -215,8 +215,11 @@ div[role="radiogroup"] label[data-checked="true"] {
 }
 
 /* ── Hide Streamlit branding ── */
-#MainMenu, footer { visibility: hidden; }
-header[data-testid="stHeader"] { background: transparent; }
+#MainMenu, footer { visibility: hidden !important; }
+header[data-testid="stHeader"] { background: transparent !important; }
+[data-testid="stToolbar"] { visibility: hidden !important; }
+[data-testid="manage-app-button"] { display: none !important; }
+[class^="viewerBadge"] { display: none !important; }
 </style>
 """, unsafe_allow_html=True)
 

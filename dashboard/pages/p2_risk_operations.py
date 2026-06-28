@@ -101,38 +101,38 @@ def render():
             border_color = '#FF4D6A' if row.Risk_Level == 'High' else ('#FFB547' if row.Risk_Level == 'Medium' else '#2DD4A7')
             
             st.markdown(f"""
-            <div style="
-              background: var(--surface-1);
-              border: 1px solid var(--border);
-              border-left: 4px solid {border_color};
-              border-radius: 12px;
-              padding: 18px 24px;
-              margin-bottom: 12px;
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-            ">
-              <div>
-                <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
-                  <span style="font-weight:600;color:var(--text-primary);font-size:15px">
-                    {row.item_id} @ {row.store_id}
-                  </span>
-                  {risk_badge(row.Risk_Level)}
-                </div>
-                <div style="font-size:13px;color:var(--text-secondary)">
-                  Estimated {days_to_stockout} days to stockout · 
-                  Risk Score: <strong style="color:{border_color}">
-                  {row.Risk_Score:.0f}/100</strong>
-                </div>
-              </div>
-              <div style="text-align:right">
-                <div style="font-size:22px;font-weight:600;color:{border_color}">
-                  ${exposure:,.0f}
-                </div>
-                <div style="font-size:12px;color:var(--text-muted)">potential exposure</div>
-              </div>
-            </div>
-            """, unsafe_allow_html=True)
+<div style="
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-left: 4px solid {border_color};
+  border-radius: 12px;
+  padding: 18px 24px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+">
+  <div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+      <span style="font-weight:600;color:var(--text-primary);font-size:15px">
+        {row.item_id} @ {row.store_id}
+      </span>
+      {risk_badge(row.Risk_Level)}
+    </div>
+    <div style="font-size:13px;color:var(--text-secondary)">
+      Estimated {days_to_stockout} days to stockout · 
+      Risk Score: <strong style="color:{border_color}">
+      {row.Risk_Score:.0f}/100</strong>
+    </div>
+  </div>
+  <div style="text-align:right">
+    <div style="font-size:22px;font-weight:600;color:{border_color}">
+      ${exposure:,.0f}
+    </div>
+    <div style="font-size:12px;color:var(--text-muted)">potential exposure</div>
+  </div>
+</div>
+""", unsafe_allow_html=True)
 
 
     # ─── TAB 2: Single Product Analysis ───────────────────────────────────────
@@ -177,72 +177,72 @@ def render():
             st.markdown(section_header("Recommended Actions"), unsafe_allow_html=True)
             
             st.markdown(f"""
-            <div style="
-              background: var(--surface-1);
-              border: 1px solid var(--border);
-              border-radius: 14px;
-              padding: 24px 28px;
-              margin-bottom: 24px;
-            ">
-              <!-- Header row -->
-              <div style="display:flex;justify-content:space-between;
-                align-items:flex-start;margin-bottom:16px">
-                <div>
-                  <div style="font-size:18px;font-weight:600;color:var(--text-primary)">
-                    {sel_item}
-                  </div>
-                  <div style="font-size:13px;color:var(--text-muted);margin-top:2px">
-                    Store: {store_sel_single} | {root_cause_s}
-                  </div>
-                </div>
-                {risk_badge(urgency)}
-              </div>
-              
-              <!-- Decision row -->
-              <div style="
-                background: var(--surface-2);
-                border-radius: 10px;
-                padding: 16px 20px;
-                display: grid;
-                grid-template-columns: 1fr 1fr 1fr 1fr;
-                gap: 16px;
-                margin-bottom: 16px;
-              ">
-                <div>
-                  <div style="font-size:11px;color:var(--text-muted);
-                    text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Order qty</div>
-                  <div style="font-size:22px;font-weight:600;color:var(--cognify-blue-light)">
-                    {df_single['Recommended_Stock_Level'].mean():.0f}
-                  </div>
-                  <div style="font-size:12px;color:var(--text-muted)">units</div>
-                </div>
-                <div>
-                  <div style="font-size:11px;color:var(--text-muted);
-                    text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Order by</div>
-                  <div style="font-size:22px;font-weight:600;color:var(--text-primary)">
-                    Today
-                  </div>
-                  <div style="font-size:12px;color:var(--text-muted)">deadline</div>
-                </div>
-                <div>
-                  <div style="font-size:11px;color:var(--text-muted);
-                    text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Risk Score</div>
-                  <div style="font-size:22px;font-weight:600;color:var(--amber-warn)">
-                    {risk_score_s:.0f}/100
-                  </div>
-                  <div style="font-size:12px;color:var(--text-muted)">AI confidence</div>
-                </div>
-                <div>
-                  <div style="font-size:11px;color:var(--text-muted);
-                    text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Cost of delay</div>
-                  <div style="font-size:22px;font-weight:600;color:var(--red-alert)">
-                    ${avg_savings:,.0f}
-                  </div>
-                  <div style="font-size:12px;color:var(--text-muted)">if not ordered today</div>
-                </div>
-              </div>
-            </div>
-            """, unsafe_allow_html=True)
+<div style="
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin-bottom: 24px;
+">
+  <!-- Header row -->
+  <div style="display:flex;justify-content:space-between;
+    align-items:flex-start;margin-bottom:16px">
+    <div>
+      <div style="font-size:18px;font-weight:600;color:var(--text-primary)">
+        {sel_item}
+      </div>
+      <div style="font-size:13px;color:var(--text-muted);margin-top:2px">
+        Store: {store_sel_single} | {root_cause_s}
+      </div>
+    </div>
+    {risk_badge(urgency)}
+  </div>
+  
+  <!-- Decision row -->
+  <div style="
+    background: var(--surface-2);
+    border-radius: 10px;
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  ">
+    <div>
+      <div style="font-size:11px;color:var(--text-muted);
+        text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Order qty</div>
+      <div style="font-size:22px;font-weight:600;color:var(--cognify-blue-light)">
+        {df_single['Recommended_Stock_Level'].mean():.0f}
+      </div>
+      <div style="font-size:12px;color:var(--text-muted)">units</div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:var(--text-muted);
+        text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Order by</div>
+      <div style="font-size:22px;font-weight:600;color:var(--text-primary)">
+        Today
+      </div>
+      <div style="font-size:12px;color:var(--text-muted)">deadline</div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:var(--text-muted);
+        text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Risk Score</div>
+      <div style="font-size:22px;font-weight:600;color:var(--amber-warn)">
+        {risk_score_s:.0f}/100
+      </div>
+      <div style="font-size:12px;color:var(--text-muted)">AI confidence</div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:var(--text-muted);
+        text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Cost of delay</div>
+      <div style="font-size:22px;font-weight:600;color:var(--red-alert)">
+        ${avg_savings:,.0f}
+      </div>
+      <div style="font-size:12px;color:var(--text-muted)">if not ordered today</div>
+    </div>
+  </div>
+</div>
+""", unsafe_allow_html=True)
 
             # Simulated Actions
             col_a1, col_a2, col_a3 = st.columns(3)
@@ -319,15 +319,15 @@ def render():
                         pct = int(val * 100)
                         colour = "var(--green-safe)" if pct < 40 else "var(--amber-warn)" if pct < 70 else "var(--red-alert)"
                         st.markdown(
-                            f"""<div style="margin:8px 0">
-                              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-                                <span style="color:var(--text-secondary);font-size:13px">{lbl}</span>
-                                <span style="color:{colour};font-weight:600;font-size:13px">{pct}%</span>
-                              </div>
-                              <div style="background:var(--surface-2);border-radius:4px;height:8px">
-                                <div style="width:{pct}%;background:{colour};height:100%;border-radius:4px"></div>
-                              </div>
-                            </div>""",
+f"""<div style="margin:8px 0">
+  <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+    <span style="color:var(--text-secondary);font-size:13px">{lbl}</span>
+    <span style="color:{colour};font-weight:600;font-size:13px">{pct}%</span>
+  </div>
+  <div style="background:var(--surface-2);border-radius:4px;height:8px">
+    <div style="width:{pct}%;background:{colour};height:100%;border-radius:4px"></div>
+  </div>
+</div>""",
                             unsafe_allow_html=True,
                         )
                 else:

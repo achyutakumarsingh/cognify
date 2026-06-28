@@ -71,41 +71,41 @@ def render():
     avg_shortfall = kpis["Avg Shortfall"]
     
     st.markdown(f"""
-    <div style="
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 28px;
-    ">
-      <div style="background:var(--red-dim);border:1px solid rgba(255,77,106,0.25);
-        border-radius:12px;padding:20px 24px">
-        <div style="font-size:32px;font-weight:600;color:#FF4D6A">
-          {p_stockout:.1%}
-        </div>
-        <div style="font-size:13px;color:var(--text-secondary);margin-top:4px">
-          Probability of stockout<br>under current parameters
-        </div>
-      </div>
-      <div style="background:var(--amber-dim);border:1px solid rgba(255,181,71,0.25);
-        border-radius:12px;padding:20px 24px">
-        <div style="font-size:32px;font-weight:600;color:#FFB547">
-          ${kpis['Net Savings']/1000:,.1f}k
-        </div>
-        <div style="font-size:13px;color:var(--text-secondary);margin-top:4px">
-          Projected net savings<br>vs baseline
-        </div>
-      </div>
-      <div style="background:var(--green-dim);border:1px solid rgba(45,212,167,0.25);
-        border-radius:12px;padding:20px 24px">
-        <div style="font-size:32px;font-weight:600;color:#2DD4A7">
-          {kpis['Proposed SL']:.1f}%
-        </div>
-        <div style="font-size:13px;color:var(--text-secondary);margin-top:4px">
-          Simulated service level<br>with risk-aware policy
-        </div>
-      </div>
+<div style="
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 28px;
+">
+  <div style="background:var(--red-dim);border:1px solid rgba(255,77,106,0.25);
+    border-radius:12px;padding:20px 24px">
+    <div style="font-size:32px;font-weight:600;color:#FF4D6A">
+      {p_stockout:.1%}
     </div>
-    """, unsafe_allow_html=True)
+    <div style="font-size:13px;color:var(--text-secondary);margin-top:4px">
+      Probability of stockout<br>under current parameters
+    </div>
+  </div>
+  <div style="background:var(--amber-dim);border:1px solid rgba(255,181,71,0.25);
+    border-radius:12px;padding:20px 24px">
+    <div style="font-size:32px;font-weight:600;color:#FFB547">
+      ${kpis['Net Savings']/1000:,.1f}k
+    </div>
+    <div style="font-size:13px;color:var(--text-secondary);margin-top:4px">
+      Projected net savings<br>vs baseline
+    </div>
+  </div>
+  <div style="background:var(--green-dim);border:1px solid rgba(45,212,167,0.25);
+    border-radius:12px;padding:20px 24px">
+    <div style="font-size:32px;font-weight:600;color:#2DD4A7">
+      {kpis['Proposed SL']:.1f}%
+    </div>
+    <div style="font-size:13px;color:var(--text-secondary);margin-top:4px">
+      Simulated service level<br>with risk-aware policy
+    </div>
+  </div>
+</div>
+""", unsafe_allow_html=True)
 
     # ─── Sweep chart – holding rate ───────────────────────────────────────────
     st.markdown(section_header("Sensitivity Analysis"), unsafe_allow_html=True)

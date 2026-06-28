@@ -126,28 +126,28 @@ def render():
             current_stock = dfc["actual"].mean() * 0.8
             if current_stock < sum(upper_conf)/len(upper_conf):
                 st.markdown(f"""
-                <div style="
-                  background: var(--red-dim);
-                  border: 1px solid rgba(255,77,106,0.3);
-                  border-radius: 10px;
-                  padding: 16px 20px;
-                  margin-bottom: 20px;
-                  display: flex;
-                  align-items: center;
-                  gap: 14px;
-                ">
-                  <span style="font-size:24px">⚠️</span>
-                  <div>
-                    <div style="font-weight:600;color:#FF4D6A;font-size:14px">
-                      Projected stockout risk detected
-                    </div>
-                    <div style="color:var(--text-secondary);font-size:13px;margin-top:3px">
-                      At current demand trajectory and upper uncertainty bound, stock may deplete. 
-                      Recommended action: <strong style="color:#E8EAF0">Review safety stock immediately.</strong>
-                    </div>
-                  </div>
-                </div>
-                """, unsafe_allow_html=True)
+<div style="
+  background: var(--red-dim);
+  border: 1px solid rgba(255,77,106,0.3);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+">
+  <span style="font-size:24px">⚠️</span>
+  <div>
+    <div style="font-weight:600;color:#FF4D6A;font-size:14px">
+      Projected stockout risk detected
+    </div>
+    <div style="color:var(--text-secondary);font-size:13px;margin-top:3px">
+      At current demand trajectory and upper uncertainty bound, stock may deplete. 
+      Recommended action: <strong style="color:#E8EAF0">Review safety stock immediately.</strong>
+    </div>
+  </div>
+</div>
+""", unsafe_allow_html=True)
 
             fig_ci = go.Figure()
             x_val = list(range(len(dfc)))
@@ -199,30 +199,30 @@ def render():
         qr_cal = report_t3.get("quantile_calibration", {})
 
         st.markdown("""
-        <div style="
-          background: var(--surface-1);
-          border: 1px solid var(--border);
-          border-radius: 12px;
-          padding: 24px 28px;
-          margin-bottom: 28px;
-        ">
-          <div style="font-size:11px;color:var(--cognify-blue);font-weight:600;
-            text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px">
-            Why this matters
-          </div>
-          <div style="font-size:20px;font-weight:600;color:var(--text-primary);
-            line-height:1.3;margin-bottom:12px">
-            Our AI knows when it doesn't know.
-          </div>
-          <div style="font-size:14px;color:var(--text-secondary);line-height:1.7">
-            Most AI forecasting tools claim 90% confidence but are only correct 68% of the time. 
-            CognifyAI uses <strong style="color:var(--cognify-blue-light)">
-            Conformal Prediction</strong> — a mathematical guarantee that our uncertainty estimates 
-            are statistically valid. When we say 90% confident, we're right 90.2% of the time. 
-            You can trust these numbers to make real ordering decisions.
-          </div>
-        </div>
-        """, unsafe_allow_html=True)
+<div style="
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-bottom: 28px;
+">
+  <div style="font-size:11px;color:var(--cognify-blue);font-weight:600;
+    text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px">
+    Why this matters
+  </div>
+  <div style="font-size:20px;font-weight:600;color:var(--text-primary);
+    line-height:1.3;margin-bottom:12px">
+    Our AI knows when it doesn't know.
+  </div>
+  <div style="font-size:14px;color:var(--text-secondary);line-height:1.7">
+    Most AI forecasting tools claim 90% confidence but are only correct 68% of the time. 
+    CognifyAI uses <strong style="color:var(--cognify-blue-light)">
+    Conformal Prediction</strong> — a mathematical guarantee that our uncertainty estimates 
+    are statistically valid. When we say 90% confident, we're right 90.2% of the time. 
+    You can trust these numbers to make real ordering decisions.
+  </div>
+</div>
+""", unsafe_allow_html=True)
 
         target_covs = [r["target_coverage"] for r in curve_t3]
         empirical_covs = [r["empirical_coverage"] for r in curve_t3]
