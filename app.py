@@ -24,93 +24,199 @@ st.set_page_config(
 # ─── Global CSS ───────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
-  /* ── Base typography ── */
-  html, body, [class*="css"] {
-    font-family: 'Inter', sans-serif !important;
-  }
+:root {
+  /* Brand */
+  --cognify-blue: #4F6BED;
+  --cognify-blue-light: #7B93F5;
+  --cognify-blue-dim: rgba(79, 107, 237, 0.15);
 
-  /* ── App background ── */
-  .stApp {
-    background: linear-gradient(160deg, #0f0c29 0%, #16123a 50%, #0f0c29 100%);
-    color: #e0e7ff;
-  }
+  /* Surfaces */
+  --surface-0: #0F1117;    /* page background */
+  --surface-1: #1A1D2E;    /* cards */
+  --surface-2: #222640;    /* elevated cards, modals */
+  --surface-3: #2A2F52;    /* hover states, selected */
 
-  /* ── Sidebar ── */
-  section[data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #1e1b4b 0%, #0f0c29 100%);
-    border-right: 1px solid #4f46e544;
-  }
-  section[data-testid="stSidebar"] * {
-    color: #c7d2fe !important;
-  }
+  /* Semantic Status */
+  --red-alert:   #FF4D6A;  /* stockout risk, critical */
+  --red-dim:     rgba(255, 77, 106, 0.12);
+  --amber-warn:  #FFB547;  /* medium risk, warning */
+  --amber-dim:   rgba(255, 181, 71, 0.12);
+  --green-safe:  #2DD4A7;  /* healthy stock, safe */
+  --green-dim:   rgba(45, 212, 167, 0.12);
 
-  /* ── Radio buttons in sidebar (nav) ── */
-  div[role="radiogroup"] label {
-    padding: 8px 12px !important;
-    border-radius: 8px !important;
-    margin: 2px 0 !important;
-    transition: background 0.2s;
-    display: block;
-  }
-  div[role="radiogroup"] label:hover {
-    background: #4f46e522 !important;
-  }
+  /* Text hierarchy */
+  --text-primary:   #E8EAF0;
+  --text-secondary: #9CA3C4;
+  --text-muted:     #5C6180;
 
-  /* ── Metrics ── */
-  [data-testid="metric-container"] {
-    background: #1e1b4b !important;
-    border: 1px solid #4f46e540;
-    border-radius: 10px;
-    padding: 12px !important;
-  }
-  [data-testid="stMetricValue"] { color: #818cf8 !important; font-weight: 700 !important; }
-  [data-testid="stMetricDelta"] { color: #4ade80 !important; }
+  /* Borders */
+  --border:        rgba(255,255,255,0.07);
+  --border-strong: rgba(255,255,255,0.14);
+  --border-accent: rgba(79, 107, 237, 0.4);
+}
 
-  /* ── Dataframe ── */
-  .dataframe { background: #1e1b4b !important; color: #e0e7ff !important; }
+html, body, [class*="css"] {
+  font-family: 'Inter', sans-serif !important;
+}
 
-  /* ── Buttons ── */
-  .stButton > button {
-    background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
-    color: #fff !important;
-    border: none !important;
-    border-radius: 8px !important;
-    font-weight: 600 !important;
-    transition: opacity 0.2s;
-  }
-  .stButton > button:hover { opacity: 0.88; }
+/* Page title — used once per page */
+.cog-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
 
-  /* ── Selectbox / slider ── */
-  .stSelectbox > div, .stSlider > div {
-    background: #1e1b4b !important;
-    border-color: #4f46e544 !important;
-  }
+/* Section header */
+.cog-section {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin: 28px 0 12px 0;
+}
 
-  /* ── Headers ── */
-  h1, h2, h3, h4, h5 { color: #e0e7ff !important; }
+/* KPI number — the big hero stat */
+.cog-kpi-value {
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
 
-  /* ── Divider ── */
-  hr { border-color: #4f46e533 !important; }
+/* KPI label */
+.cog-kpi-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
 
-  /* ── Progress bar ── */
-  .stProgress > div > div { background: #4f46e5 !important; }
+/* Delta — positive/negative change indicator */
+.cog-delta-up   { color: var(--green-safe); font-size: 13px; margin-top: 6px; font-weight: 500; }
+.cog-delta-down { color: var(--red-alert);  font-size: 13px; margin-top: 6px; font-weight: 500; }
 
-  /* ── Tabs ── */
-  .stTabs [data-baseweb="tab"] {
-    background: #1e1b4b;
-    color: #818cf8;
-    border-radius: 6px 6px 0 0;
-  }
-  .stTabs [aria-selected="true"] {
-    background: #4f46e5 !important;
-    color: #fff !important;
-  }
+/* Monospace for numbers in tables */
+.cog-mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+}
 
-  /* ── Hide Streamlit branding ── */
-  #MainMenu, footer { visibility: hidden; }
-  header[data-testid="stHeader"] { background: transparent; }
+/* Body insight text — the plain-English translation */
+.cog-insight {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  border-left: 3px solid var(--cognify-blue);
+  padding-left: 14px;
+  margin: 12px 0;
+}
+
+/* ── Sidebar ── */
+[data-testid="stSidebarNav"] { display: none; }
+section[data-testid="stSidebar"] {
+  background: var(--surface-1) !important;
+  border-right: 1px solid var(--border) !important;
+  padding-top: 0 !important;
+}
+
+.cog-logo {
+  padding: 24px 20px 20px 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+.cog-logo-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+}
+.cog-logo-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Radio buttons in sidebar (nav) acting as cog-nav-item */
+div[role="radiogroup"] label {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 10px 20px !important;
+  border-radius: 8px !important;
+  margin: 2px 8px !important;
+  font-size: 14px !important;
+  color: var(--text-secondary) !important;
+  cursor: pointer !important;
+  transition: all 0.15s !important;
+}
+div[role="radiogroup"] label:hover {
+  background: var(--cognify-blue-dim) !important;
+  color: var(--cognify-blue-light) !important;
+}
+div[role="radiogroup"] label[data-checked="true"] {
+  background: var(--cognify-blue-dim) !important;
+  color: var(--cognify-blue-light) !important;
+}
+
+/* Status pill at bottom of sidebar */
+.cog-sidebar-status {
+  margin: 20px 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ── Main Content Area ── */
+.main .block-container {
+  padding-top: 2rem !important;
+  padding-left: 2.5rem !important;
+  padding-right: 2.5rem !important;
+  max-width: 1200px !important;
+}
+
+/* Every st.dataframe gets dark themed */
+[data-testid="stDataFrame"] {
+  border: 1px solid var(--border) !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+}
+
+/* Streamlit selectbox / input dark styling */
+[data-testid="stSelectbox"] > div > div {
+  background: var(--surface-2) !important;
+  border-color: var(--border-strong) !important;
+  border-radius: 8px !important;
+}
+
+/* Buttons */
+.stButton > button {
+  background: var(--cognify-blue) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  padding: 10px 20px !important;
+  font-size: 14px !important;
+  transition: all 0.15s !important;
+}
+.stButton > button:hover {
+  background: var(--cognify-blue-light) !important;
+  transform: translateY(-1px);
+}
+
+/* ── Hide Streamlit branding ── */
+#MainMenu, footer { visibility: hidden; }
+header[data-testid="stHeader"] { background: transparent; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -131,12 +237,9 @@ if "demo_step" not in st.session_state:
 
 with st.sidebar:
     st.markdown("""
-    <div style="text-align:center;padding:16px 0 24px">
-      <div style="font-size:2.2rem">🔮</div>
-      <h2 style="color:#818cf8;margin:4px 0;font-size:1.05rem;letter-spacing:0.05em">
-        SUPPLY CHAIN AI
-      </h2>
-      <p style="color:#64748b;font-size:0.72rem;margin:0">Decision Intelligence Platform</p>
+    <div class="cog-logo">
+      <div class="cog-logo-text">⬡ CognifyAI</div>
+      <div class="cog-logo-sub">Supply Chain Intelligence</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -169,7 +272,7 @@ with st.sidebar:
     st.markdown("---")
 
     st.markdown("""
-    <div style="font-size:0.7rem;color:#475569;text-align:center;padding:8px 0">
+    <div class="cog-sidebar-status">
       <b>Stages Complete:</b> 1 → 7<br>
       M5 Forecasting Competition Dataset<br>
       XGBoost · Conformal Prediction<br>
