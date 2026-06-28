@@ -100,39 +100,23 @@ def render():
             
             border_color = '#FF4D6A' if row.Risk_Level == 'High' else ('#FFB547' if row.Risk_Level == 'Medium' else '#2DD4A7')
             
-            st.markdown(f"""
-<div style="
-  background: var(--surface-1);
-  border: 1px solid var(--border);
-  border-left: 4px solid {border_color};
-  border-radius: 12px;
-  padding: 18px 24px;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-">
-  <div>
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
-      <span style="font-weight:600;color:var(--text-primary);font-size:15px">
-        {row.item_id} @ {row.store_id}
-      </span>
-      {risk_badge(row.Risk_Level)}
-    </div>
-    <div style="font-size:13px;color:var(--text-secondary)">
-      Estimated {days_to_stockout} days to stockout · 
-      Risk Score: <strong style="color:{border_color}">
-      {row.Risk_Score:.0f}/100</strong>
-    </div>
-  </div>
-  <div style="text-align:right">
-    <div style="font-size:22px;font-weight:600;color:{border_color}">
-      ${exposure:,.0f}
-    </div>
-    <div style="font-size:12px;color:var(--text-muted)">potential exposure</div>
-  </div>
-</div>
-""", unsafe_allow_html=True)
+            card_html = (
+                f'<div style="background:var(--surface-1);border:1px solid var(--border);border-left:4px solid {border_color};border-radius:12px;padding:18px 24px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;">'
+                f'<div>'
+                f'<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">'
+                f'<span style="font-weight:600;color:var(--text-primary);font-size:15px;">{row.item_id} @ {row.store_id}</span>'
+                f'{risk_badge(row.Risk_Level)}'
+                f'</div>'
+                f'<div style="font-size:13px;color:var(--text-secondary);">Estimated {days_to_stockout} days to stockout &middot; Risk Score: <strong style="color:{border_color};">{row.Risk_Score:.0f}/100</strong></div>'
+                f'</div>'
+                f'<div style="text-align:right;">'
+                f'<div style="font-size:22px;font-weight:600;color:{border_color};">${exposure:,.0f}</div>'
+                f'<div style="font-size:12px;color:var(--text-muted);">potential exposure</div>'
+                f'</div>'
+                f'</div>'
+            )
+            st.markdown(card_html, unsafe_allow_html=True)
+
 
 
     # ─── TAB 2: Single Product Analysis ───────────────────────────────────────

@@ -59,20 +59,7 @@ def kpi_card(value, label, delta=None, delta_direction="up", color="default"):
         cls = "cog-delta-up" if delta_direction == "up" else "cog-delta-down"
         delta_html = f'<div class="{cls}">{arrow} {delta}</div>'
     
-    return f"""
-<div style="
-  background: var(--surface-1);
-  border: 1px solid var(--border);
-  border-top: 3px solid {accent};
-  border-radius: 12px;
-  padding: 20px 24px;
-  height: 100%;
-">
-  <div class="cog-kpi-value" style="color:{accent}">{value}</div>
-  <div class="cog-kpi-label">{label}</div>
-  {delta_html}
-</div>
-"""
+    return (f'<div style="background:var(--surface-1);border:1px solid var(--border);border-top:3px solid {accent};border-radius:12px;padding:20px 24px;height:100%;">' f'<div class="cog-kpi-value" style="color:{accent}">{value}</div>' f'<div class="cog-kpi-label">{label}</div>' f'{delta_html}' f'</div>')
 
 def risk_badge(level):
     config = {
@@ -84,51 +71,11 @@ def risk_badge(level):
     }
     level_up = str(level).upper()
     color, bg, dot = config.get(level_up, config["LOW"])
-    return f"""
-<span style="
-  background:{bg};
-  color:{color};
-  border:1px solid {color}40;
-  border-radius:6px;
-  padding:3px 10px;
-  font-size:11px;
-  font-weight:600;
-  letter-spacing:0.5px;
-">{dot} {level_up}</span>
-"""
+    return f'<span style="background:{bg};color:{color};border:1px solid {color}40;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;letter-spacing:0.5px;">{dot} {level_up}</span>'
+
 
 def insight_box(text, icon="💡"):
-    return f"""
-<div style="
-  background: var(--cognify-blue-dim);
-  border: 1px solid var(--border-accent);
-  border-radius: 10px;
-  padding: 14px 18px;
-  margin: 16px 0;
-  font-size: 14px;
-  color: var(--text-secondary);
-  line-height: 1.6;
-">
-  <span style="margin-right:8px">{icon}</span>{text}
-</div>
-"""
+    return f'<div style="background:var(--cognify-blue-dim);border:1px solid var(--border-accent);border-radius:10px;padding:14px 18px;margin:16px 0;font-size:14px;color:var(--text-secondary);line-height:1.6;"><span style="margin-right:8px">{icon}</span>{text}</div>'
 
 def section_header(title):
-    return f"""
-<div style="
-  margin: 32px 0 16px 0;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-">
-  <span style="
-    font-size:11px;
-    font-weight:600;
-    color:var(--text-muted);
-    text-transform:uppercase;
-    letter-spacing:1.4px;
-    white-space:nowrap;
-  ">{title}</span>
-  <div style="flex:1;height:1px;background:var(--border)"></div>
-</div>
-"""
+    return f'<div style="margin:32px 0 16px 0;display:flex;align-items:center;gap:12px;"><span style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.4px;white-space:nowrap;">{title}</span><div style="flex:1;height:1px;background:var(--border)"></div></div>'
