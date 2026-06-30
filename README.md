@@ -147,3 +147,20 @@ MLProj/
 - **Modularity:** UI logic is cleanly separated into 4 distinct page modules.
 - **Robustness:** Handles missing data safely with graceful fallbacks.
 - **Enterprise UI:** Features a custom CSS injected design system (Inter typography, responsive layouts, glassmorphism elements, and intuitive risk color-coding).
+
+---
+
+## 📄 Hackathon Supporting Documentation
+
+The complete, formal white paper detailing the problem understanding, solution architecture, technical approach, mathematical calibration proofs, and business impact is compiled and available in PDF format:
+
+* **Download/View PDF:** [Supply Chain Decision Intelligence Solution PDF](outputs/submission/Supply_Chain_Decision_Intelligence_Solution.pdf)
+
+### PDF White Paper Outline:
+1. **Problem Understanding:** Highlighting the limits of point forecasts and benefits of calibrated uncertainty.
+2. **Proposed Solution:** Platform overview and components.
+3. **Technical Approach:** In-depth 8-stage engineering process with 6 embedded figures representing point forecasting, conformal calibration, risk classification, and financial cost comparisons.
+4. **Prototype Design:** User workflow walkthrough and dashboard page configurations.
+5. **Feasibility & Scalability:** Deployment analysis, O(1) inference updates, and maintenance costs.
+6. **Expected Business Impact:** Net cost savings (15.6%), service level increases (+8.9 pp), and a **5.6x Penalty Mitigation Ratio**.
+7. **Future Scope:** Roadmap for multi-echelon logistics, Reinforcement Learning dynamic alpha-tuning, and LLM Copilot integrations.
