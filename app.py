@@ -178,10 +178,15 @@ div[role="radiogroup"] label[data-checked="true"] {
 
 /* ── Main Content Area ── */
 .main .block-container {
-  padding-top: 0.5rem !important;
+  padding-top: 0rem !important;
   padding-left: 2.5rem !important;
   padding-right: 2.5rem !important;
   max-width: 1200px !important;
+}
+
+.main .block-container > div:first-child {
+  margin-top: 0rem !important;
+  padding-top: 0rem !important;
 }
 
 /* Every st.dataframe gets dark themed */
