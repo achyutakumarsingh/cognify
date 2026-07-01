@@ -235,6 +235,10 @@ PAGES = {
 # Initialize session state for demo and navigation
 if "demo_active" not in st.session_state:
     st.session_state["demo_active"] = False
+if "sidebar_demo_toggle" not in st.session_state:
+    st.session_state["sidebar_demo_toggle"] = False
+if "demo_toggle_widget" not in st.session_state:
+    st.session_state["demo_toggle_widget"] = False
 if "demo_step" not in st.session_state:
     st.session_state["demo_step"] = 0
 if "selected_page" not in st.session_state:
@@ -261,6 +265,28 @@ def on_topnav_change():
     if st.session_state["demo_active"]:
         st.session_state["demo_step"] = list(PAGES.keys()).index(page)
 
+def on_sidebar_demo_toggle():
+    active = st.session_state["sidebar_demo_toggle"]
+    st.session_state["demo_active"] = active
+    st.session_state["demo_toggle_widget"] = active
+    if active:
+        st.session_state["demo_step"] = 0
+        first_page = list(PAGES.keys())[0]
+        st.session_state["selected_page"] = first_page
+        st.session_state["sidebar_nav"] = first_page
+        st.session_state["topnav_nav"] = first_page
+
+def on_demo_toggle():
+    active = st.session_state["demo_toggle_widget"]
+    st.session_state["demo_active"] = active
+    st.session_state["sidebar_demo_toggle"] = active
+    if active:
+        st.session_state["demo_step"] = 0
+        first_page = list(PAGES.keys())[0]
+        st.session_state["selected_page"] = first_page
+        st.session_state["sidebar_nav"] = first_page
+        st.session_state["topnav_nav"] = first_page
+
 with st.sidebar:
     st.markdown("""
     <div class="cog-logo">
@@ -271,11 +297,17 @@ with st.sidebar:
 
     st.markdown("---")
     
-    # Guided Demo checkbox
-    demo_active = st.checkbox("🚀 Guided Demo Mode", value=st.session_state["demo_active"])
-    st.session_state["demo_active"] = demo_active
+    # Ensure sidebar toggle matches state
+    st.session_state["sidebar_demo_toggle"] = st.session_state["demo_active"]
     
-    if demo_active:
+    # Guided Demo checkbox with callback
+    demo_active = st.checkbox(
+        "🚀 Guided Demo Mode", 
+        key="sidebar_demo_toggle",
+        on_change=on_sidebar_demo_toggle
+    )
+    
+    if st.session_state["demo_active"]:
         st.markdown("### 🧭 Demo Progress")
         steps = list(PAGES.keys())
         selected_index = st.session_state["demo_step"]
@@ -308,7 +340,11 @@ with st.sidebar:
 
 
 # ─── Top Navigation Bar ───────────────────────────────────────────────────────
-col_logo, col_nav = st.columns([1.5, 4])
+# Sync topnav toggle widget state
+st.session_state["demo_toggle_widget"] = st.session_state["demo_active"]
+
+# We adjust columns to include the Demo Mode toggle on the right
+col_logo, col_nav, col_demo = st.columns([1.5, 3.5, 1.2])
 
 with col_logo:
     logo_text = "⬡ CognifyAI (Show Menu)" if not st.session_state["show_nav"] else "⬡ CognifyAI (Hide Menu)"
@@ -326,6 +362,14 @@ if st.session_state["show_nav"]:
             horizontal=True,
             label_visibility="collapsed"
         )
+
+with col_demo:
+    # Render the Demo Mode toggle switch on the right side of the navbar
+    st.toggle(
+        "🚀 Demo Mode",
+        key="demo_toggle_widget",
+        on_change=on_demo_toggle
+    )
 
 st.markdown("---")
 
