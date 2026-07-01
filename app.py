@@ -178,7 +178,7 @@ div[role="radiogroup"] label[data-checked="true"] {
 
 /* ── Main Content Area ── */
 .main .block-container {
-  padding-top: 2rem !important;
+  padding-top: 0.5rem !important;
   padding-left: 2.5rem !important;
   padding-right: 2.5rem !important;
   max-width: 1200px !important;
@@ -216,7 +216,7 @@ div[role="radiogroup"] label[data-checked="true"] {
 
 /* ── Hide Streamlit branding ── */
 #MainMenu, footer { visibility: hidden !important; }
-header[data-testid="stHeader"] { background: transparent !important; }
+header[data-testid="stHeader"] { display: none !important; }
 [data-testid="stToolbar"] { visibility: hidden !important; }
 [data-testid="manage-app-button"] { display: none !important; }
 [class^="viewerBadge"] { display: none !important; }
