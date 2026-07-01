@@ -260,17 +260,22 @@ with st.sidebar:
         if selected_index >= len(steps):
             selected_index = 0
             st.session_state["demo_step"] = 0
+            
+        # Use st.radio for navigation so custom CSS applies
+        selected = st.radio(
+            "Navigation", 
+            steps, 
+            index=selected_index, 
+            label_visibility="collapsed"
+        )
         
-        # Display list of steps
-        for idx, step_name in enumerate(steps):
-            if idx == selected_index:
-                st.markdown(f"**👉 {step_name}**")
-            else:
-                st.markdown(f"<span style='color:#64748b'>{step_name}</span>", unsafe_allow_html=True)
-                
-        selected = steps[selected_index]
+        # Update demo_step if user clicked a different radio button manually
+        new_index = steps.index(selected)
+        if new_index != st.session_state["demo_step"]:
+            st.session_state["demo_step"] = new_index
+            st.rerun()
     else:
-        selected = st.radio("", list(PAGES.keys()), label_visibility="collapsed")
+        selected = st.radio("Navigation", list(PAGES.keys()), label_visibility="collapsed")
         
     st.markdown("---")
 
