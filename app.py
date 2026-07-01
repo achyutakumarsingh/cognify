@@ -235,56 +235,31 @@ PAGES = {
 # Initialize session state for demo and navigation
 if "demo_active" not in st.session_state:
     st.session_state["demo_active"] = False
-if "sidebar_demo_toggle" not in st.session_state:
-    st.session_state["sidebar_demo_toggle"] = False
 if "demo_toggle_widget" not in st.session_state:
     st.session_state["demo_toggle_widget"] = False
 if "demo_step" not in st.session_state:
     st.session_state["demo_step"] = 0
 if "selected_page" not in st.session_state:
     st.session_state["selected_page"] = list(PAGES.keys())[0]
-if "sidebar_nav" not in st.session_state:
-    st.session_state["sidebar_nav"] = list(PAGES.keys())[0]
 if "topnav_nav" not in st.session_state:
     st.session_state["topnav_nav"] = list(PAGES.keys())[0]
 if "show_nav" not in st.session_state:
     st.session_state["show_nav"] = True
 
-# Callbacks to sync topnav and sidebar
-def on_sidebar_change():
-    page = st.session_state["sidebar_nav"]
-    st.session_state["selected_page"] = page
-    st.session_state["topnav_nav"] = page
-    if st.session_state["demo_active"]:
-        st.session_state["demo_step"] = list(PAGES.keys()).index(page)
-
+# Callbacks to sync topnav
 def on_topnav_change():
     page = st.session_state["topnav_nav"]
     st.session_state["selected_page"] = page
-    st.session_state["sidebar_nav"] = page
     if st.session_state["demo_active"]:
         st.session_state["demo_step"] = list(PAGES.keys()).index(page)
-
-def on_sidebar_demo_toggle():
-    active = st.session_state["sidebar_demo_toggle"]
-    st.session_state["demo_active"] = active
-    st.session_state["demo_toggle_widget"] = active
-    if active:
-        st.session_state["demo_step"] = 0
-        first_page = list(PAGES.keys())[0]
-        st.session_state["selected_page"] = first_page
-        st.session_state["sidebar_nav"] = first_page
-        st.session_state["topnav_nav"] = first_page
 
 def on_demo_toggle():
     active = st.session_state["demo_toggle_widget"]
     st.session_state["demo_active"] = active
-    st.session_state["sidebar_demo_toggle"] = active
     if active:
         st.session_state["demo_step"] = 0
         first_page = list(PAGES.keys())[0]
         st.session_state["selected_page"] = first_page
-        st.session_state["sidebar_nav"] = first_page
         st.session_state["topnav_nav"] = first_page
 
 with st.sidebar:
@@ -295,38 +270,6 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
-    st.markdown("---")
-    
-    # Ensure sidebar toggle matches state
-    st.session_state["sidebar_demo_toggle"] = st.session_state["demo_active"]
-    
-    # Guided Demo checkbox with callback
-    demo_active = st.checkbox(
-        "🚀 Guided Demo Mode", 
-        key="sidebar_demo_toggle",
-        on_change=on_sidebar_demo_toggle
-    )
-    
-    if st.session_state["demo_active"]:
-        st.markdown("### 🧭 Demo Progress")
-        steps = list(PAGES.keys())
-        selected_index = st.session_state["demo_step"]
-        # Ensure index is valid
-        if selected_index >= len(steps):
-            selected_index = 0
-            st.session_state["demo_step"] = 0
-            
-        # Update sidebar key to match demo_step
-        st.session_state["sidebar_nav"] = steps[selected_index]
-        
-    st.radio(
-        "Navigation", 
-        list(PAGES.keys()), 
-        key="sidebar_nav", 
-        on_change=on_sidebar_change,
-        label_visibility="collapsed"
-    )
-        
     st.markdown("---")
 
     st.markdown("""
@@ -402,7 +345,6 @@ if st.session_state["demo_active"]:
                 st.session_state["demo_step"] += 1
                 next_page = steps[st.session_state["demo_step"]]
                 st.session_state["selected_page"] = next_page
-                st.session_state["sidebar_nav"] = next_page
                 st.session_state["topnav_nav"] = next_page
                 st.rerun()
         else:
@@ -411,7 +353,6 @@ if st.session_state["demo_active"]:
                 st.session_state["demo_active"] = False
                 first_page = steps[0]
                 st.session_state["selected_page"] = first_page
-                st.session_state["sidebar_nav"] = first_page
                 st.session_state["topnav_nav"] = first_page
                 st.rerun()
 
