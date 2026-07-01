@@ -262,6 +262,19 @@ def on_demo_toggle():
         st.session_state["selected_page"] = first_page
         st.session_state["topnav_nav"] = first_page
 
+def on_next_step():
+    st.session_state["demo_step"] += 1
+    next_page = list(PAGES.keys())[st.session_state["demo_step"]]
+    st.session_state["selected_page"] = next_page
+    st.session_state["topnav_nav"] = next_page
+
+def on_finish_demo():
+    st.session_state["demo_step"] = 0
+    st.session_state["demo_active"] = False
+    first_page = list(PAGES.keys())[0]
+    st.session_state["selected_page"] = first_page
+    st.session_state["topnav_nav"] = first_page
+
 
 
 
@@ -273,8 +286,7 @@ st.session_state["demo_toggle_widget"] = st.session_state["demo_active"]
 col_logo, col_nav, col_demo = st.columns([1.5, 3.5, 1.2])
 
 with col_logo:
-    logo_text = "⬡ CognifyAI (Show Menu)" if not st.session_state["show_nav"] else "⬡ CognifyAI (Hide Menu)"
-    if st.button(logo_text, key="logo_toggle", use_container_width=True):
+    if st.button("⬡ CognifyAI", key="logo_toggle", use_container_width=True):
         st.session_state["show_nav"] = not st.session_state["show_nav"]
         st.rerun()
 
@@ -324,20 +336,9 @@ if st.session_state["demo_active"]:
         )
     with col_btn:
         if current_step < len(steps) - 1:
-            if st.button("Next Step ➡️", use_container_width=True):
-                st.session_state["demo_step"] += 1
-                next_page = steps[st.session_state["demo_step"]]
-                st.session_state["selected_page"] = next_page
-                st.session_state["topnav_nav"] = next_page
-                st.rerun()
+            st.button("Next Step ➡️", use_container_width=True, on_click=on_next_step)
         else:
-            if st.button("Finish Demo 🔁", use_container_width=True):
-                st.session_state["demo_step"] = 0
-                st.session_state["demo_active"] = False
-                first_page = steps[0]
-                st.session_state["selected_page"] = first_page
-                st.session_state["topnav_nav"] = first_page
-                st.rerun()
+            st.button("Finish Demo 🔁", use_container_width=True, on_click=on_finish_demo)
 
 selected = st.session_state["selected_page"]
 module_name = PAGES[selected]
