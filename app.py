@@ -18,7 +18,7 @@ st.set_page_config(
     page_title="Supply Chain Decision Intelligence",
     page_icon="🔮",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",
 )
 
 # ─── Global CSS ───────────────────────────────────────────────────────────────
@@ -118,12 +118,12 @@ html, body, [class*="css"] {
   margin: 12px 0;
 }
 
-/* ── Sidebar ── */
-[data-testid="stSidebarNav"] { display: none; }
-section[data-testid="stSidebar"] {
-  background: var(--surface-1) !important;
-  border-right: 1px solid var(--border) !important;
-  padding-top: 0 !important;
+/* ── Hide Sidebar Completely ── */
+[data-testid="stSidebar"], section[data-testid="stSidebar"] {
+  display: none !important;
+}
+[data-testid="collapsedControl"] {
+  display: none !important;
 }
 
 .cog-logo {
@@ -262,24 +262,7 @@ def on_demo_toggle():
         st.session_state["selected_page"] = first_page
         st.session_state["topnav_nav"] = first_page
 
-with st.sidebar:
-    st.markdown("""
-    <div class="cog-logo">
-      <div class="cog-logo-text">⬡ CognifyAI</div>
-      <div class="cog-logo-sub">Supply Chain Intelligence</div>
-    </div>
-    """, unsafe_allow_html=True)
 
-    st.markdown("---")
-
-    st.markdown("""
-    <div class="cog-sidebar-status">
-      <b>Stages Complete:</b> 1 → 7<br>
-      M5 Forecasting Competition Dataset<br>
-      XGBoost · Conformal Prediction<br>
-      Risk-Aware Inventory Optimization
-    </div>
-    """, unsafe_allow_html=True)
 
 
 # ─── Top Navigation Bar ───────────────────────────────────────────────────────
