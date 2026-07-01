@@ -232,11 +232,34 @@ PAGES = {
     "🧠 Technical Engine":       "p4_technical_engine",
 }
 
-# Initialize session state for demo
+# Initialize session state for demo and navigation
 if "demo_active" not in st.session_state:
     st.session_state["demo_active"] = False
 if "demo_step" not in st.session_state:
     st.session_state["demo_step"] = 0
+if "selected_page" not in st.session_state:
+    st.session_state["selected_page"] = list(PAGES.keys())[0]
+if "sidebar_nav" not in st.session_state:
+    st.session_state["sidebar_nav"] = list(PAGES.keys())[0]
+if "topnav_nav" not in st.session_state:
+    st.session_state["topnav_nav"] = list(PAGES.keys())[0]
+if "show_nav" not in st.session_state:
+    st.session_state["show_nav"] = True
+
+# Callbacks to sync topnav and sidebar
+def on_sidebar_change():
+    page = st.session_state["sidebar_nav"]
+    st.session_state["selected_page"] = page
+    st.session_state["topnav_nav"] = page
+    if st.session_state["demo_active"]:
+        st.session_state["demo_step"] = list(PAGES.keys()).index(page)
+
+def on_topnav_change():
+    page = st.session_state["topnav_nav"]
+    st.session_state["selected_page"] = page
+    st.session_state["sidebar_nav"] = page
+    if st.session_state["demo_active"]:
+        st.session_state["demo_step"] = list(PAGES.keys()).index(page)
 
 with st.sidebar:
     st.markdown("""
@@ -261,21 +284,16 @@ with st.sidebar:
             selected_index = 0
             st.session_state["demo_step"] = 0
             
-        # Use st.radio for navigation so custom CSS applies
-        selected = st.radio(
-            "Navigation", 
-            steps, 
-            index=selected_index, 
-            label_visibility="collapsed"
-        )
+        # Update sidebar key to match demo_step
+        st.session_state["sidebar_nav"] = steps[selected_index]
         
-        # Update demo_step if user clicked a different radio button manually
-        new_index = steps.index(selected)
-        if new_index != st.session_state["demo_step"]:
-            st.session_state["demo_step"] = new_index
-            st.rerun()
-    else:
-        selected = st.radio("Navigation", list(PAGES.keys()), label_visibility="collapsed")
+    st.radio(
+        "Navigation", 
+        list(PAGES.keys()), 
+        key="sidebar_nav", 
+        on_change=on_sidebar_change,
+        label_visibility="collapsed"
+    )
         
     st.markdown("---")
 
@@ -287,6 +305,29 @@ with st.sidebar:
       Risk-Aware Inventory Optimization
     </div>
     """, unsafe_allow_html=True)
+
+
+# ─── Top Navigation Bar ───────────────────────────────────────────────────────
+col_logo, col_nav = st.columns([1.5, 4])
+
+with col_logo:
+    logo_text = "⬡ CognifyAI (Show Menu)" if not st.session_state["show_nav"] else "⬡ CognifyAI (Hide Menu)"
+    if st.button(logo_text, key="logo_toggle", use_container_width=True):
+        st.session_state["show_nav"] = not st.session_state["show_nav"]
+        st.rerun()
+
+if st.session_state["show_nav"]:
+    with col_nav:
+        st.radio(
+            "Top Navigation",
+            list(PAGES.keys()),
+            key="topnav_nav",
+            on_change=on_topnav_change,
+            horizontal=True,
+            label_visibility="collapsed"
+        )
+
+st.markdown("---")
 
 
 # ─── Dynamic page loading ─────────────────────────────────────────────────────
@@ -315,13 +356,22 @@ if st.session_state["demo_active"]:
         if current_step < len(steps) - 1:
             if st.button("Next Step ➡️", use_container_width=True):
                 st.session_state["demo_step"] += 1
+                next_page = steps[st.session_state["demo_step"]]
+                st.session_state["selected_page"] = next_page
+                st.session_state["sidebar_nav"] = next_page
+                st.session_state["topnav_nav"] = next_page
                 st.rerun()
         else:
             if st.button("Finish Demo 🔁", use_container_width=True):
                 st.session_state["demo_step"] = 0
                 st.session_state["demo_active"] = False
+                first_page = steps[0]
+                st.session_state["selected_page"] = first_page
+                st.session_state["sidebar_nav"] = first_page
+                st.session_state["topnav_nav"] = first_page
                 st.rerun()
 
+selected = st.session_state["selected_page"]
 module_name = PAGES[selected]
 import importlib
 page_module = importlib.import_module(f"dashboard.pages.{module_name}")
